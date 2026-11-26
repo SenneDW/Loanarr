@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-label="Loanarr: weet wat je kan kopen. Je eerste woning in België, tot op de cent berekend.">
+  <style>
+    .sans { font-family: Geist, Inter, "Segoe UI", Helvetica, Arial, sans-serif; }
+    .num { font-variant-numeric: tabular-nums; }
+    @keyframes up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @keyframes bar { 0%, 8% { transform: scaleY(0); } 22%, 100% { transform: scaleY(1); } }
+    @keyframes draw { 0%, 15% { stroke-dashoffset: 760; } 60%, 100% { stroke-dashoffset: 0; } }
+    @keyframes n1 { 0%, 20% { opacity: 1; } 26%, 100% { opacity: 0; } }
+    @keyframes n2 { 0%, 20% { opacity: 0; } 26%, 40% { opacity: 1; } 46%, 100% { opacity: 0; } }
+    @keyframes n3 { 0%, 40% { opacity: 0; } 46%, 100% { opacity: 1; } }
+    @keyframes dot { 0%, 58% { opacity: 0; transform: scale(.4); } 66%, 100% { opacity: 1; transform: none; } }
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.015); } }
+    .in1 { animation: up .8s ease-out .1s both; }
+    .in2 { animation: up .8s ease-out .35s both; }
+    .in3 { animation: up .8s ease-out .6s both; }
+    .card { animation: up .9s ease-out .4s both; }
+    .b { transform-box: fill-box; transform-origin: bottom; animation: bar 8s cubic-bezier(.2,.8,.2,1) infinite; }
+    .b2 { animation-delay: .15s; } .b3 { animation-delay: .3s; }
+    .line { stroke-dasharray: 760; animation: draw 8s ease-in-out infinite; }
+    .v1 { animation: n1 8s infinite; } .v2 { animation: n2 8s infinite; } .v3 { animation: n3 8s infinite; }
+    .pt { transform-box: fill-box; transform-origin: center; animation: dot 8s ease-out infinite; }
+    .glow { transform-box: fill-box; transform-origin: center; animation: breathe 6s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F6FBF9"/>
+      <stop offset="1" stop-color="#E4F3EC"/>
+    </linearGradient>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B6E57" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#0B6E57" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+  <circle class="glow" cx="1040" cy="40" r="220" fill="#E8A33D" opacity=".12"/>
+
+  <!-- Logo: a house with rising bars -->
+  <g transform="translate(64 64)"><g class="in1">
+    <rect width="64" height="64" rx="14" fill="#0B6E57"/>
+    <path d="M14 31 32 16l18 15" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M19 28v18a3 3 0 0 0 3 3h20a3 3 0 0 0 3-3V28" fill="none" stroke="#fff" stroke-width="4.5" stroke-linejoin="round"/>
+    <rect class="b" x="24.5" y="38" width="4" height="7" rx="1.2" fill="#fff"/>
+    <rect class="b b2" x="30" y="34" width="4" height="11" rx="1.2" fill="#fff"/>
+    <rect class="b b3" x="35.5" y="30" width="4" height="15" rx="1.2" fill="#fff"/>
+    <text class="sans" x="84" y="44" font-size="34" font-weight="700" fill="#0E2A22" letter-spacing="-0.5">Loanarr</text>
+  </g></g>
+
+  <g class="in2 sans" fill="#0E2A22">
+    <text x="64" y="212" font-size="56" font-weight="700" letter-spacing="-1.5">Weet wat je kan kopen.</text>
+    <text x="64" y="258" font-size="24" fill="#3E5A51">Je eerste woning in België, tot op de cent berekend.</text>
+  </g>
+  <g class="in3 sans" font-size="18" fill="#0B6E57" font-weight="600">
+    <rect x="64" y="300" width="182" height="40" rx="20" fill="#0B6E57" fill-opacity=".1"/>
+    <text x="155" y="326" text-anchor="middle">Live NBB-rente</text>
+    <rect x="258" y="300" width="208" height="40" rx="20" fill="#0B6E57" fill-opacity=".1"/>
+    <text x="362" y="326" text-anchor="middle">Notaris &amp; rechten</text>
+    <rect x="478" y="300" width="176" height="40" rx="20" fill="#0B6E57" fill-opacity=".1"/>
+    <text x="566" y="326" text-anchor="middle">Kopen of huren</text>
+  </g>
+
+  <!-- Result card -->
+  <g class="card">
+    <rect x="740" y="60" width="396" height="300" rx="22" fill="#fff" stroke="#D9EAE3" stroke-width="2"/>
+    <rect x="740" y="60" width="396" height="122" rx="22" fill="#0B6E57"/>
+    <rect x="740" y="150" width="396" height="32" fill="#0B6E57"/>
+    <text class="sans" x="770" y="100" font-size="18" fill="#CFEADF">Maximaal aankoopbedrag</text>
+    <g class="sans num" font-size="46" font-weight="700" fill="#fff">
+      <text class="v1" x="770" y="156">€ 162.400</text>
+      <text class="v2" x="770" y="156">€ 247.900</text>
+      <text class="v3" x="770" y="156">€ 318.282</text>
+    </g>
+    <text class="sans" x="770" y="214" font-size="15" fill="#3E5A51">Rente na onderhandeling, 20 jaar</text>
+    <path d="M770 330 L812 312 L850 318 L890 290 L930 296 L970 262 L1010 270 L1050 240 L1106 226 V340 H770 Z" fill="url(#area)"/>
+    <path class="line" d="M770 330 L812 312 L850 318 L890 290 L930 296 L970 262 L1010 270 L1050 240 L1106 226" fill="none" stroke="#0B6E57" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="pt" cx="1106" cy="226" r="7" fill="#E8A33D" stroke="#fff" stroke-width="3"/>
+  </g>
+</svg>
