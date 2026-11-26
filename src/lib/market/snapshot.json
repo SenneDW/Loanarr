@@ -1,0 +1,1805 @@
+{
+  "fetchedAt": "2026-11-26T22:55:48.691Z",
+  "points": [
+    {
+      "month": "2000-01",
+      "all": 6.09,
+      "variable": 5.25
+    },
+    {
+      "month": "2000-02",
+      "all": 6.34,
+      "variable": 5.51
+    },
+    {
+      "month": "2000-03",
+      "all": 6.32,
+      "variable": 5.49
+    },
+    {
+      "month": "2000-04",
+      "all": 6.3,
+      "variable": 5.47
+    },
+    {
+      "month": "2000-05",
+      "all": 6.49,
+      "variable": 5.66
+    },
+    {
+      "month": "2000-06",
+      "all": 6.49,
+      "variable": 5.66
+    },
+    {
+      "month": "2000-07",
+      "all": 6.5,
+      "variable": 5.67
+    },
+    {
+      "month": "2000-08",
+      "all": 6.52,
+      "variable": 5.69
+    },
+    {
+      "month": "2000-09",
+      "all": 6.53,
+      "variable": 5.7
+    },
+    {
+      "month": "2000-10",
+      "all": 6.6,
+      "variable": 5.77
+    },
+    {
+      "month": "2000-11",
+      "all": 6.69,
+      "variable": 5.86
+    },
+    {
+      "month": "2000-12",
+      "all": 6.68,
+      "variable": 5.85
+    },
+    {
+      "month": "2001-01",
+      "all": 6.64,
+      "variable": 5.81
+    },
+    {
+      "month": "2001-02",
+      "all": 6.6,
+      "variable": 5.77
+    },
+    {
+      "month": "2001-03",
+      "all": 6.57,
+      "variable": 5.74
+    },
+    {
+      "month": "2001-04",
+      "all": 6.47,
+      "variable": 5.64
+    },
+    {
+      "month": "2001-05",
+      "all": 6.58,
+      "variable": 5.75
+    },
+    {
+      "month": "2001-06",
+      "all": 6.58,
+      "variable": 5.75
+    },
+    {
+      "month": "2001-07",
+      "all": 6.58,
+      "variable": 5.75
+    },
+    {
+      "month": "2001-08",
+      "all": 6.29,
+      "variable": 5.46
+    },
+    {
+      "month": "2001-09",
+      "all": 6.28,
+      "variable": 5.45
+    },
+    {
+      "month": "2001-10",
+      "all": 6.23,
+      "variable": 5.4
+    },
+    {
+      "month": "2001-11",
+      "all": 5.78,
+      "variable": 4.94
+    },
+    {
+      "month": "2001-12",
+      "all": 5.83,
+      "variable": 4.99
+    },
+    {
+      "month": "2002-01",
+      "all": 5.84,
+      "variable": 5
+    },
+    {
+      "month": "2002-02",
+      "all": 5.8,
+      "variable": 4.96
+    },
+    {
+      "month": "2002-03",
+      "all": 5.93,
+      "variable": 5.09
+    },
+    {
+      "month": "2002-04",
+      "all": 6.07,
+      "variable": 5.23
+    },
+    {
+      "month": "2002-05",
+      "all": 6.07,
+      "variable": 5.23
+    },
+    {
+      "month": "2002-06",
+      "all": 6.15,
+      "variable": 5.31
+    },
+    {
+      "month": "2002-07",
+      "all": 6.11,
+      "variable": 5.27
+    },
+    {
+      "month": "2002-08",
+      "all": 5.73,
+      "variable": 4.89
+    },
+    {
+      "month": "2002-09",
+      "all": 5.69,
+      "variable": 4.85
+    },
+    {
+      "month": "2002-10",
+      "all": 5.36,
+      "variable": 4.51
+    },
+    {
+      "month": "2002-11",
+      "all": 5.33,
+      "variable": 4.48
+    },
+    {
+      "month": "2002-12",
+      "all": 5.32,
+      "variable": 4.47
+    },
+    {
+      "month": "2003-01",
+      "all": 5.09
+    },
+    {
+      "month": "2003-02",
+      "all": 4.96
+    },
+    {
+      "month": "2003-03",
+      "all": 4.82
+    },
+    {
+      "month": "2003-04",
+      "all": 4.67
+    },
+    {
+      "month": "2003-05",
+      "all": 4.65
+    },
+    {
+      "month": "2003-06",
+      "all": 4.51
+    },
+    {
+      "month": "2003-07",
+      "all": 4.35
+    },
+    {
+      "month": "2003-08",
+      "all": 4.27
+    },
+    {
+      "month": "2003-09",
+      "all": 4.24
+    },
+    {
+      "month": "2003-10",
+      "all": 4.25
+    },
+    {
+      "month": "2003-11",
+      "all": 4.3
+    },
+    {
+      "month": "2003-12",
+      "all": 4.31
+    },
+    {
+      "month": "2004-01",
+      "all": 4.34
+    },
+    {
+      "month": "2004-02",
+      "all": 4.26
+    },
+    {
+      "month": "2004-03",
+      "all": 4.15
+    },
+    {
+      "month": "2004-04",
+      "all": 3.99
+    },
+    {
+      "month": "2004-05",
+      "all": 3.85
+    },
+    {
+      "month": "2004-06",
+      "all": 3.88
+    },
+    {
+      "month": "2004-07",
+      "all": 3.91
+    },
+    {
+      "month": "2004-08",
+      "all": 3.97
+    },
+    {
+      "month": "2004-09",
+      "all": 3.95
+    },
+    {
+      "month": "2004-10",
+      "all": 3.89
+    },
+    {
+      "month": "2004-11",
+      "all": 3.86
+    },
+    {
+      "month": "2004-12",
+      "all": 3.81
+    },
+    {
+      "month": "2005-01",
+      "all": 3.7
+    },
+    {
+      "month": "2005-02",
+      "all": 3.73
+    },
+    {
+      "month": "2005-03",
+      "all": 3.83
+    },
+    {
+      "month": "2005-04",
+      "all": 3.86
+    },
+    {
+      "month": "2005-05",
+      "all": 3.78
+    },
+    {
+      "month": "2005-06",
+      "all": 3.71
+    },
+    {
+      "month": "2005-07",
+      "all": 3.68
+    },
+    {
+      "month": "2005-08",
+      "all": 3.65
+    },
+    {
+      "month": "2005-09",
+      "all": 3.61
+    },
+    {
+      "month": "2005-10",
+      "all": 3.64
+    },
+    {
+      "month": "2005-11",
+      "all": 3.68
+    },
+    {
+      "month": "2005-12",
+      "all": 3.73
+    },
+    {
+      "month": "2006-01",
+      "all": 3.77
+    },
+    {
+      "month": "2006-02",
+      "all": 3.84
+    },
+    {
+      "month": "2006-03",
+      "all": 3.89
+    },
+    {
+      "month": "2006-04",
+      "all": 3.94
+    },
+    {
+      "month": "2006-05",
+      "all": 3.98
+    },
+    {
+      "month": "2006-06",
+      "all": 4.02
+    },
+    {
+      "month": "2006-07",
+      "all": 4.16
+    },
+    {
+      "month": "2006-08",
+      "all": 4.29
+    },
+    {
+      "month": "2006-09",
+      "all": 4.34
+    },
+    {
+      "month": "2006-10",
+      "all": 4.38,
+      "variable": 4.29,
+      "fixedLong": 4.4
+    },
+    {
+      "month": "2006-11",
+      "all": 4.38,
+      "variable": 4.37,
+      "fixedLong": 4.38
+    },
+    {
+      "month": "2006-12",
+      "all": 4.39,
+      "variable": 4.47,
+      "fixedLong": 4.36
+    },
+    {
+      "month": "2007-01",
+      "all": 4.4,
+      "variable": 4.61,
+      "fixedLong": 4.36
+    },
+    {
+      "month": "2007-02",
+      "all": 4.45,
+      "variable": 4.65,
+      "fixedLong": 4.4
+    },
+    {
+      "month": "2007-03",
+      "all": 4.46,
+      "variable": 4.69,
+      "fixedLong": 4.41
+    },
+    {
+      "month": "2007-04",
+      "all": 4.49,
+      "variable": 4.82,
+      "fixedLong": 4.43
+    },
+    {
+      "month": "2007-05",
+      "all": 4.5,
+      "variable": 4.86,
+      "fixedLong": 4.42
+    },
+    {
+      "month": "2007-06",
+      "all": 4.53,
+      "variable": 4.87,
+      "fixedLong": 4.46
+    },
+    {
+      "month": "2007-07",
+      "all": 4.69,
+      "variable": 5.01,
+      "fixedLong": 4.61
+    },
+    {
+      "month": "2007-08",
+      "all": 4.83,
+      "variable": 5.03,
+      "fixedLong": 4.78
+    },
+    {
+      "month": "2007-09",
+      "all": 4.93,
+      "variable": 5.13,
+      "fixedLong": 4.88
+    },
+    {
+      "month": "2007-10",
+      "all": 5.01,
+      "variable": 5.18,
+      "fixedLong": 4.95
+    },
+    {
+      "month": "2007-11",
+      "all": 5.02,
+      "variable": 5.21,
+      "fixedLong": 4.95
+    },
+    {
+      "month": "2007-12",
+      "all": 5.01,
+      "variable": 5.26,
+      "fixedLong": 4.93
+    },
+    {
+      "month": "2008-01",
+      "all": 5.01,
+      "variable": 5.25,
+      "fixedLong": 4.93
+    },
+    {
+      "month": "2008-02",
+      "all": 4.97,
+      "variable": 5.2,
+      "fixedLong": 4.91
+    },
+    {
+      "month": "2008-03",
+      "all": 4.93,
+      "variable": 5.16,
+      "fixedLong": 4.88
+    },
+    {
+      "month": "2008-04",
+      "all": 4.88,
+      "variable": 5.19,
+      "fixedLong": 4.83
+    },
+    {
+      "month": "2008-05",
+      "all": 4.89,
+      "variable": 5.39,
+      "fixedLong": 4.83
+    },
+    {
+      "month": "2008-06",
+      "all": 4.93,
+      "variable": 5.58,
+      "fixedLong": 4.85
+    },
+    {
+      "month": "2008-07",
+      "all": 5.07,
+      "variable": 5.76,
+      "fixedLong": 4.99
+    },
+    {
+      "month": "2008-08",
+      "all": 5.22,
+      "variable": 5.89,
+      "fixedLong": 5.14
+    },
+    {
+      "month": "2008-09",
+      "all": 5.35,
+      "variable": 5.98,
+      "fixedLong": 5.26
+    },
+    {
+      "month": "2008-10",
+      "all": 5.43,
+      "variable": 6.02,
+      "fixedLong": 5.33
+    },
+    {
+      "month": "2008-11",
+      "all": 5.35,
+      "variable": 5.62,
+      "fixedLong": 5.28
+    },
+    {
+      "month": "2008-12",
+      "all": 5.01,
+      "variable": 4.87,
+      "fixedLong": 4.99
+    },
+    {
+      "month": "2009-01",
+      "all": 4.72,
+      "variable": 4.36,
+      "fixedLong": 4.75
+    },
+    {
+      "month": "2009-02",
+      "all": 4.51,
+      "variable": 4.02,
+      "fixedLong": 4.63
+    },
+    {
+      "month": "2009-03",
+      "all": 4.31,
+      "variable": 3.74,
+      "fixedLong": 4.52
+    },
+    {
+      "month": "2009-04",
+      "all": 4.15,
+      "variable": 3.45,
+      "fixedLong": 4.5
+    },
+    {
+      "month": "2009-05",
+      "all": 4.05,
+      "variable": 3.33,
+      "fixedLong": 4.48
+    },
+    {
+      "month": "2009-06",
+      "all": 3.95,
+      "variable": 3.18,
+      "fixedLong": 4.48
+    },
+    {
+      "month": "2009-07",
+      "all": 3.88,
+      "variable": 3.09,
+      "fixedLong": 4.56
+    },
+    {
+      "month": "2009-08",
+      "all": 3.81,
+      "variable": 3.04,
+      "fixedLong": 4.64
+    },
+    {
+      "month": "2009-09",
+      "all": 3.73,
+      "variable": 2.94,
+      "fixedLong": 4.61
+    },
+    {
+      "month": "2009-10",
+      "all": 3.64,
+      "variable": 2.93,
+      "fixedLong": 4.55
+    },
+    {
+      "month": "2009-11",
+      "all": 3.61,
+      "variable": 2.95,
+      "fixedLong": 4.47
+    },
+    {
+      "month": "2009-12",
+      "all": 3.55,
+      "variable": 2.92,
+      "fixedLong": 4.43
+    },
+    {
+      "month": "2010-01",
+      "all": 3.48,
+      "variable": 2.9,
+      "fixedLong": 4.45
+    },
+    {
+      "month": "2010-02",
+      "all": 3.52,
+      "variable": 2.95,
+      "fixedLong": 4.41
+    },
+    {
+      "month": "2010-03",
+      "all": 3.47,
+      "variable": 2.91,
+      "fixedLong": 4.32
+    },
+    {
+      "month": "2010-04",
+      "all": 3.43,
+      "variable": 2.89,
+      "fixedLong": 4.24
+    },
+    {
+      "month": "2010-05",
+      "all": 3.39,
+      "variable": 2.84,
+      "fixedLong": 4.16
+    },
+    {
+      "month": "2010-06",
+      "all": 3.38,
+      "variable": 2.82,
+      "fixedLong": 4.03
+    },
+    {
+      "month": "2010-07",
+      "all": 3.4,
+      "variable": 2.78,
+      "fixedLong": 4.03
+    },
+    {
+      "month": "2010-08",
+      "all": 3.45,
+      "variable": 2.86,
+      "fixedLong": 4
+    },
+    {
+      "month": "2010-09",
+      "all": 3.52,
+      "variable": 2.87,
+      "fixedLong": 3.9
+    },
+    {
+      "month": "2010-10",
+      "all": 3.6,
+      "variable": 2.94,
+      "fixedLong": 3.86
+    },
+    {
+      "month": "2010-11",
+      "all": 3.64,
+      "variable": 3.04,
+      "fixedLong": 3.83
+    },
+    {
+      "month": "2010-12",
+      "all": 3.68,
+      "variable": 3.12,
+      "fixedLong": 3.82
+    },
+    {
+      "month": "2011-01",
+      "all": 3.73,
+      "variable": 3.19,
+      "fixedLong": 3.88
+    },
+    {
+      "month": "2011-02",
+      "all": 3.79,
+      "variable": 3.27,
+      "fixedLong": 3.92
+    },
+    {
+      "month": "2011-03",
+      "all": 3.85,
+      "variable": 3.34,
+      "fixedLong": 3.98
+    },
+    {
+      "month": "2011-04",
+      "all": 3.92,
+      "variable": 3.4,
+      "fixedLong": 4.09
+    },
+    {
+      "month": "2011-05",
+      "all": 3.98,
+      "variable": 3.55,
+      "fixedLong": 4.13
+    },
+    {
+      "month": "2011-06",
+      "all": 4,
+      "variable": 3.64,
+      "fixedLong": 4.12
+    },
+    {
+      "month": "2011-07",
+      "all": 4.05,
+      "variable": 3.76,
+      "fixedLong": 4.13
+    },
+    {
+      "month": "2011-08",
+      "all": 4.01,
+      "variable": 3.78,
+      "fixedLong": 4.05
+    },
+    {
+      "month": "2011-09",
+      "all": 3.91,
+      "variable": 3.77,
+      "fixedLong": 3.93
+    },
+    {
+      "month": "2011-10",
+      "all": 3.8,
+      "variable": 3.81,
+      "fixedLong": 3.79
+    },
+    {
+      "month": "2011-11",
+      "all": 3.74,
+      "variable": 3.81,
+      "fixedLong": 3.72
+    },
+    {
+      "month": "2011-12",
+      "all": 3.71,
+      "variable": 3.82,
+      "fixedLong": 3.69
+    },
+    {
+      "month": "2012-01",
+      "all": 3.86,
+      "variable": 3.96,
+      "fixedLong": 3.87
+    },
+    {
+      "month": "2012-02",
+      "all": 3.88,
+      "variable": 3.86,
+      "fixedLong": 3.9
+    },
+    {
+      "month": "2012-03",
+      "all": 3.87,
+      "variable": 3.84,
+      "fixedLong": 3.9
+    },
+    {
+      "month": "2012-04",
+      "all": 3.81,
+      "variable": 3.68,
+      "fixedLong": 3.85
+    },
+    {
+      "month": "2012-05",
+      "all": 3.74,
+      "variable": 3.56,
+      "fixedLong": 3.81
+    },
+    {
+      "month": "2012-06",
+      "all": 3.61,
+      "variable": 3.48,
+      "fixedLong": 3.67
+    },
+    {
+      "month": "2012-07",
+      "all": 3.54,
+      "variable": 3.4,
+      "fixedLong": 3.58
+    },
+    {
+      "month": "2012-08",
+      "all": 3.52,
+      "variable": 3.42,
+      "fixedLong": 3.59
+    },
+    {
+      "month": "2012-09",
+      "all": 3.48,
+      "variable": 3.2,
+      "fixedLong": 3.59
+    },
+    {
+      "month": "2012-10",
+      "all": 3.47,
+      "variable": 3.11,
+      "fixedLong": 3.64
+    },
+    {
+      "month": "2012-11",
+      "all": 3.45,
+      "variable": 3.1,
+      "fixedLong": 3.7
+    },
+    {
+      "month": "2012-12",
+      "all": 3.44,
+      "variable": 2.99,
+      "fixedLong": 3.69
+    },
+    {
+      "month": "2013-01",
+      "all": 3.41,
+      "variable": 3.1,
+      "fixedLong": 3.65
+    },
+    {
+      "month": "2013-02",
+      "all": 3.42,
+      "variable": 3,
+      "fixedLong": 3.68
+    },
+    {
+      "month": "2013-03",
+      "all": 3.41,
+      "variable": 3.05,
+      "fixedLong": 3.64
+    },
+    {
+      "month": "2013-04",
+      "all": 3.4,
+      "variable": 3.1,
+      "fixedLong": 3.6
+    },
+    {
+      "month": "2013-05",
+      "all": 3.38,
+      "variable": 3.2,
+      "fixedLong": 3.55
+    },
+    {
+      "month": "2013-06",
+      "all": 3.34,
+      "variable": 3.1,
+      "fixedLong": 3.5
+    },
+    {
+      "month": "2013-07",
+      "all": 3.4,
+      "variable": 3.3,
+      "fixedLong": 3.53
+    },
+    {
+      "month": "2013-08",
+      "all": 3.4,
+      "variable": 3.13,
+      "fixedLong": 3.56
+    },
+    {
+      "month": "2013-09",
+      "all": 3.44,
+      "variable": 3.14,
+      "fixedLong": 3.62
+    },
+    {
+      "month": "2013-10",
+      "all": 3.53,
+      "variable": 3.17,
+      "fixedLong": 3.75
+    },
+    {
+      "month": "2013-11",
+      "all": 3.59,
+      "variable": 3.19,
+      "fixedLong": 3.83
+    },
+    {
+      "month": "2013-12",
+      "all": 3.56,
+      "variable": 3.06,
+      "fixedLong": 3.84
+    },
+    {
+      "month": "2014-01",
+      "all": 3.55,
+      "variable": 3.09,
+      "fixedLong": 3.82
+    },
+    {
+      "month": "2014-02",
+      "all": 3.52,
+      "variable": 3.09,
+      "fixedLong": 3.76
+    },
+    {
+      "month": "2014-03",
+      "all": 3.43,
+      "variable": 3.06,
+      "fixedLong": 3.66
+    },
+    {
+      "month": "2014-04",
+      "all": 3.39,
+      "variable": 3.11,
+      "fixedLong": 3.56
+    },
+    {
+      "month": "2014-05",
+      "all": 3.34,
+      "variable": 3.13,
+      "fixedLong": 3.46
+    },
+    {
+      "month": "2014-06",
+      "all": 3.24,
+      "variable": 3.11,
+      "fixedLong": 3.35
+    },
+    {
+      "month": "2014-07",
+      "all": 3.14,
+      "variable": 3.16,
+      "fixedLong": 3.23
+    },
+    {
+      "month": "2014-08",
+      "all": 3.04,
+      "variable": 3.1,
+      "fixedLong": 3.12
+    },
+    {
+      "month": "2014-09",
+      "all": 2.95,
+      "variable": 3.01,
+      "fixedLong": 3.04
+    },
+    {
+      "month": "2014-10",
+      "all": 2.86,
+      "variable": 2.91,
+      "fixedLong": 2.97
+    },
+    {
+      "month": "2014-11",
+      "all": 2.82,
+      "variable": 2.77,
+      "fixedLong": 2.91
+    },
+    {
+      "month": "2014-12",
+      "all": 2.7,
+      "variable": 2.64,
+      "fixedLong": 2.79
+    },
+    {
+      "month": "2015-01",
+      "all": 2.68,
+      "variable": 2.77,
+      "fixedLong": 2.7
+    },
+    {
+      "month": "2015-02",
+      "all": 2.6,
+      "variable": 2.75,
+      "fixedLong": 2.59
+    },
+    {
+      "month": "2015-03",
+      "all": 2.53,
+      "variable": 2.74,
+      "fixedLong": 2.54
+    },
+    {
+      "month": "2015-04",
+      "all": 2.49,
+      "variable": 2.79,
+      "fixedLong": 2.49
+    },
+    {
+      "month": "2015-05",
+      "all": 2.45,
+      "variable": 2.7,
+      "fixedLong": 2.46
+    },
+    {
+      "month": "2015-06",
+      "all": 2.43,
+      "variable": 2.73,
+      "fixedLong": 2.43
+    },
+    {
+      "month": "2015-07",
+      "all": 2.45,
+      "variable": 2.66,
+      "fixedLong": 2.46
+    },
+    {
+      "month": "2015-08",
+      "all": 2.45,
+      "variable": 2.67,
+      "fixedLong": 2.45
+    },
+    {
+      "month": "2015-09",
+      "all": 2.44,
+      "variable": 2.6,
+      "fixedLong": 2.45
+    },
+    {
+      "month": "2015-10",
+      "all": 2.47,
+      "variable": 2.6,
+      "fixedLong": 2.49
+    },
+    {
+      "month": "2015-11",
+      "all": 2.46,
+      "variable": 2.55,
+      "fixedLong": 2.51
+    },
+    {
+      "month": "2015-12",
+      "all": 2.42,
+      "variable": 2.45,
+      "fixedLong": 2.48
+    },
+    {
+      "month": "2016-01",
+      "all": 2.4,
+      "variable": 2.27,
+      "fixedLong": 2.46
+    },
+    {
+      "month": "2016-02",
+      "all": 2.34,
+      "variable": 2.31,
+      "fixedLong": 2.4
+    },
+    {
+      "month": "2016-03",
+      "all": 2.23,
+      "variable": 2.24,
+      "fixedLong": 2.27
+    },
+    {
+      "month": "2016-04",
+      "all": 2.15,
+      "variable": 2.25,
+      "fixedLong": 2.16
+    },
+    {
+      "month": "2016-05",
+      "all": 2.07,
+      "variable": 2.32,
+      "fixedLong": 2.08
+    },
+    {
+      "month": "2016-06",
+      "all": 2.03,
+      "variable": 2.36,
+      "fixedLong": 2.05
+    },
+    {
+      "month": "2016-07",
+      "all": 2.03,
+      "variable": 2.31,
+      "fixedLong": 2.04
+    },
+    {
+      "month": "2016-08",
+      "all": 2.01,
+      "variable": 2.39,
+      "fixedLong": 2.03
+    },
+    {
+      "month": "2016-09",
+      "all": 2.02,
+      "variable": 2.47,
+      "fixedLong": 2.01
+    },
+    {
+      "month": "2016-10",
+      "all": 2,
+      "variable": 2.44,
+      "fixedLong": 2
+    },
+    {
+      "month": "2016-11",
+      "all": 1.99,
+      "variable": 2.46,
+      "fixedLong": 1.99
+    },
+    {
+      "month": "2016-12",
+      "all": 2,
+      "variable": 2.49,
+      "fixedLong": 1.99
+    },
+    {
+      "month": "2017-01",
+      "all": 2.03,
+      "variable": 2.38,
+      "fixedLong": 2.03
+    },
+    {
+      "month": "2017-02",
+      "all": 2.05,
+      "variable": 2.35,
+      "fixedLong": 2.06
+    },
+    {
+      "month": "2017-03",
+      "all": 2.11,
+      "variable": 2.46,
+      "fixedLong": 2.11
+    },
+    {
+      "month": "2017-04",
+      "all": 2.13,
+      "variable": 2.15,
+      "fixedLong": 2.16
+    },
+    {
+      "month": "2017-05",
+      "all": 2.14,
+      "variable": 2.24,
+      "fixedLong": 2.15
+    },
+    {
+      "month": "2017-06",
+      "all": 2.15,
+      "variable": 2.25,
+      "fixedLong": 2.16
+    },
+    {
+      "month": "2017-07",
+      "all": 2.13,
+      "variable": 2.2,
+      "fixedLong": 2.14
+    },
+    {
+      "month": "2017-08",
+      "all": 2.13,
+      "variable": 2.13,
+      "fixedLong": 2.13
+    },
+    {
+      "month": "2017-09",
+      "all": 2.11,
+      "variable": 2.06,
+      "fixedLong": 2.13
+    },
+    {
+      "month": "2017-10",
+      "all": 2.06,
+      "variable": 1.92,
+      "fixedLong": 2.1
+    },
+    {
+      "month": "2017-11",
+      "all": 2.04,
+      "variable": 1.84,
+      "fixedLong": 2.07
+    },
+    {
+      "month": "2017-12",
+      "all": 2.02,
+      "variable": 1.92,
+      "fixedLong": 2.03
+    },
+    {
+      "month": "2018-01",
+      "all": 2,
+      "variable": 1.86,
+      "fixedLong": 2.01
+    },
+    {
+      "month": "2018-02",
+      "all": 2,
+      "variable": 1.8,
+      "fixedLong": 2.02
+    },
+    {
+      "month": "2018-03",
+      "all": 1.96,
+      "variable": 1.58,
+      "fixedLong": 2.01
+    },
+    {
+      "month": "2018-04",
+      "all": 1.95,
+      "variable": 1.52,
+      "fixedLong": 2.01
+    },
+    {
+      "month": "2018-05",
+      "all": 1.94,
+      "variable": 1.45,
+      "fixedLong": 2.02
+    },
+    {
+      "month": "2018-06",
+      "all": 1.91,
+      "variable": 1.51,
+      "fixedLong": 2.01
+    },
+    {
+      "month": "2018-07",
+      "all": 1.87,
+      "variable": 1.51,
+      "fixedLong": 2
+    },
+    {
+      "month": "2018-08",
+      "all": 1.83,
+      "variable": 1.6,
+      "fixedLong": 1.97
+    },
+    {
+      "month": "2018-09",
+      "all": 1.79,
+      "variable": 1.57,
+      "fixedLong": 1.95
+    },
+    {
+      "month": "2018-10",
+      "all": 1.81,
+      "variable": 1.66,
+      "fixedLong": 1.94
+    },
+    {
+      "month": "2018-11",
+      "all": 1.85,
+      "variable": 1.58,
+      "fixedLong": 1.95
+    },
+    {
+      "month": "2018-12",
+      "all": 1.87,
+      "variable": 1.56,
+      "fixedLong": 1.97
+    },
+    {
+      "month": "2019-01",
+      "all": 1.88,
+      "variable": 1.57,
+      "fixedLong": 1.96
+    },
+    {
+      "month": "2019-02",
+      "all": 1.9,
+      "variable": 1.63,
+      "fixedLong": 1.95
+    },
+    {
+      "month": "2019-03",
+      "all": 1.89,
+      "variable": 1.82,
+      "fixedLong": 1.91
+    },
+    {
+      "month": "2019-04",
+      "all": 1.84,
+      "variable": 1.91,
+      "fixedLong": 1.87
+    },
+    {
+      "month": "2019-05",
+      "all": 1.83,
+      "variable": 1.96,
+      "fixedLong": 1.84
+    },
+    {
+      "month": "2019-06",
+      "all": 1.8,
+      "variable": 1.87,
+      "fixedLong": 1.79
+    },
+    {
+      "month": "2019-07",
+      "all": 1.79,
+      "variable": 1.78,
+      "fixedLong": 1.78
+    },
+    {
+      "month": "2019-08",
+      "all": 1.75,
+      "variable": 1.93,
+      "fixedLong": 1.74
+    },
+    {
+      "month": "2019-09",
+      "all": 1.7,
+      "variable": 1.84,
+      "fixedLong": 1.68
+    },
+    {
+      "month": "2019-10",
+      "all": 1.68,
+      "variable": 1.86,
+      "fixedLong": 1.64
+    },
+    {
+      "month": "2019-11",
+      "all": 1.67,
+      "variable": 1.92,
+      "fixedLong": 1.61
+    },
+    {
+      "month": "2019-12",
+      "all": 1.64,
+      "variable": 1.94,
+      "fixedLong": 1.56
+    },
+    {
+      "month": "2020-01",
+      "all": 1.69,
+      "variable": 1.69,
+      "fixedLong": 1.69
+    },
+    {
+      "month": "2020-02",
+      "all": 1.72,
+      "variable": 1.95,
+      "fixedLong": 1.67
+    },
+    {
+      "month": "2020-03",
+      "all": 1.71,
+      "variable": 1.87,
+      "fixedLong": 1.66
+    },
+    {
+      "month": "2020-04",
+      "all": 1.66,
+      "variable": 1.7,
+      "fixedLong": 1.6
+    },
+    {
+      "month": "2020-05",
+      "all": 1.61,
+      "variable": 1.86,
+      "fixedLong": 1.52
+    },
+    {
+      "month": "2020-06",
+      "all": 1.57,
+      "variable": 1.79,
+      "fixedLong": 1.48
+    },
+    {
+      "month": "2020-07",
+      "all": 1.52,
+      "variable": 1.92,
+      "fixedLong": 1.45
+    },
+    {
+      "month": "2020-08",
+      "all": 1.5,
+      "variable": 1.84,
+      "fixedLong": 1.42
+    },
+    {
+      "month": "2020-09",
+      "all": 1.48,
+      "variable": 1.92,
+      "fixedLong": 1.4
+    },
+    {
+      "month": "2020-10",
+      "all": 1.48,
+      "variable": 1.91,
+      "fixedLong": 1.4
+    },
+    {
+      "month": "2020-11",
+      "all": 1.48,
+      "variable": 1.96,
+      "fixedLong": 1.4
+    },
+    {
+      "month": "2020-12",
+      "all": 1.46,
+      "variable": 2.03,
+      "fixedLong": 1.37
+    },
+    {
+      "month": "2021-01",
+      "all": 1.45,
+      "variable": 1.98,
+      "fixedLong": 1.36
+    },
+    {
+      "month": "2021-02",
+      "all": 1.43,
+      "variable": 1.77,
+      "fixedLong": 1.34
+    },
+    {
+      "month": "2021-03",
+      "all": 1.43,
+      "variable": 1.84,
+      "fixedLong": 1.34
+    },
+    {
+      "month": "2021-04",
+      "all": 1.43,
+      "variable": 1.88,
+      "fixedLong": 1.33
+    },
+    {
+      "month": "2021-05",
+      "all": 1.43,
+      "variable": 1.91,
+      "fixedLong": 1.33
+    },
+    {
+      "month": "2021-06",
+      "all": 1.44,
+      "variable": 1.89,
+      "fixedLong": 1.35
+    },
+    {
+      "month": "2021-07",
+      "all": 1.45,
+      "variable": 1.96,
+      "fixedLong": 1.36
+    },
+    {
+      "month": "2021-08",
+      "all": 1.48,
+      "variable": 1.93,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2021-09",
+      "all": 1.48,
+      "variable": 1.85,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2021-10",
+      "all": 1.48,
+      "variable": 1.92,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2021-11",
+      "all": 1.49,
+      "variable": 1.93,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2021-12",
+      "all": 1.49,
+      "variable": 1.92,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2022-01",
+      "all": 1.48,
+      "variable": 1.93,
+      "fixedLong": 1.38
+    },
+    {
+      "month": "2022-02",
+      "all": 1.53,
+      "variable": 1.99,
+      "fixedLong": 1.43
+    },
+    {
+      "month": "2022-03",
+      "all": 1.56,
+      "variable": 1.97,
+      "fixedLong": 1.47
+    },
+    {
+      "month": "2022-04",
+      "all": 1.65,
+      "variable": 1.91,
+      "fixedLong": 1.55
+    },
+    {
+      "month": "2022-05",
+      "all": 1.78,
+      "variable": 1.97,
+      "fixedLong": 1.7
+    },
+    {
+      "month": "2022-06",
+      "all": 1.93,
+      "variable": 1.9,
+      "fixedLong": 1.86
+    },
+    {
+      "month": "2022-07",
+      "all": 2.15,
+      "variable": 2.1,
+      "fixedLong": 2.09
+    },
+    {
+      "month": "2022-08",
+      "all": 2.35,
+      "variable": 2.27,
+      "fixedLong": 2.3
+    },
+    {
+      "month": "2022-09",
+      "all": 2.54,
+      "variable": 2.46,
+      "fixedLong": 2.48
+    },
+    {
+      "month": "2022-10",
+      "all": 2.73,
+      "variable": 2.89,
+      "fixedLong": 2.62
+    },
+    {
+      "month": "2022-11",
+      "all": 2.89,
+      "variable": 3.18,
+      "fixedLong": 2.76
+    },
+    {
+      "month": "2022-12",
+      "all": 3.08,
+      "variable": 3.67,
+      "fixedLong": 2.91
+    },
+    {
+      "month": "2023-01",
+      "all": 3.17,
+      "variable": 3.65,
+      "fixedLong": 2.99
+    },
+    {
+      "month": "2023-02",
+      "all": 3.34,
+      "variable": 4.01,
+      "fixedLong": 3.11
+    },
+    {
+      "month": "2023-03",
+      "all": 3.44,
+      "variable": 4.4,
+      "fixedLong": 3.17
+    },
+    {
+      "month": "2023-04",
+      "all": 3.46,
+      "variable": 4.55,
+      "fixedLong": 3.19
+    },
+    {
+      "month": "2023-05",
+      "all": 3.54,
+      "variable": 4.66,
+      "fixedLong": 3.28
+    },
+    {
+      "month": "2023-06",
+      "all": 3.64,
+      "variable": 4.87,
+      "fixedLong": 3.38
+    },
+    {
+      "month": "2023-07",
+      "all": 3.62,
+      "variable": 4.92,
+      "fixedLong": 3.36
+    },
+    {
+      "month": "2023-08",
+      "all": 3.69,
+      "variable": 5.26,
+      "fixedLong": 3.4
+    },
+    {
+      "month": "2023-09",
+      "all": 3.73,
+      "variable": 5.25,
+      "fixedLong": 3.45
+    },
+    {
+      "month": "2023-10",
+      "all": 3.78,
+      "variable": 5.35,
+      "fixedLong": 3.47
+    },
+    {
+      "month": "2023-11",
+      "all": 3.81,
+      "variable": 5.45,
+      "fixedLong": 3.56
+    },
+    {
+      "month": "2023-12",
+      "all": 3.9,
+      "variable": 5.66,
+      "fixedLong": 3.6
+    },
+    {
+      "month": "2024-01",
+      "all": 3.66,
+      "variable": 5.41,
+      "fixedLong": 3.38
+    },
+    {
+      "month": "2024-02",
+      "all": 3.67,
+      "variable": 5.37,
+      "fixedLong": 3.38
+    },
+    {
+      "month": "2024-03",
+      "all": 3.51,
+      "variable": 5.31,
+      "fixedLong": 3.21
+    },
+    {
+      "month": "2024-04",
+      "all": 3.42,
+      "variable": 5.16,
+      "fixedLong": 3.1
+    },
+    {
+      "month": "2024-05",
+      "all": 3.44,
+      "variable": 5.2,
+      "fixedLong": 3.14
+    },
+    {
+      "month": "2024-06",
+      "all": 3.43,
+      "variable": 5.24,
+      "fixedLong": 3.15
+    },
+    {
+      "month": "2024-07",
+      "all": 3.41,
+      "variable": 5.36,
+      "fixedLong": 3.11
+    },
+    {
+      "month": "2024-08",
+      "all": 3.4,
+      "variable": 5.17,
+      "fixedLong": 3.12
+    },
+    {
+      "month": "2024-09",
+      "all": 3.34,
+      "variable": 4.92,
+      "fixedLong": 3.09
+    },
+    {
+      "month": "2024-10",
+      "all": 3.28,
+      "variable": 4.76,
+      "fixedLong": 3.03
+    },
+    {
+      "month": "2024-11",
+      "all": 3.19,
+      "variable": 4.74,
+      "fixedLong": 2.97
+    },
+    {
+      "month": "2024-12",
+      "all": 3.16,
+      "variable": 4.61,
+      "fixedLong": 2.89
+    },
+    {
+      "month": "2025-01",
+      "all": 3.05,
+      "variable": 4.4,
+      "fixedLong": 2.84
+    },
+    {
+      "month": "2025-02",
+      "all": 3.09,
+      "variable": 4.4,
+      "fixedLong": 2.87
+    },
+    {
+      "month": "2025-03",
+      "all": 3.07,
+      "variable": 4.38,
+      "fixedLong": 2.88
+    },
+    {
+      "month": "2025-04",
+      "all": 3.15,
+      "variable": 4.28,
+      "fixedLong": 2.95
+    },
+    {
+      "month": "2025-05",
+      "all": 3.19,
+      "variable": 4.26,
+      "fixedLong": 3
+    },
+    {
+      "month": "2025-06",
+      "all": 3.24,
+      "variable": 4.19,
+      "fixedLong": 3.08
+    },
+    {
+      "month": "2025-07",
+      "all": 3.27,
+      "variable": 4.12,
+      "fixedLong": 3.12
+    },
+    {
+      "month": "2025-08",
+      "all": 3.29,
+      "variable": 4.11,
+      "fixedLong": 3.16
+    },
+    {
+      "month": "2025-09",
+      "all": 3.36,
+      "variable": 4.1,
+      "fixedLong": 3.22
+    },
+    {
+      "month": "2025-10",
+      "all": 3.37,
+      "variable": 4.17,
+      "fixedLong": 3.26
+    },
+    {
+      "month": "2025-11",
+      "all": 3.38,
+      "variable": 4.26,
+      "fixedLong": 3.28
+    },
+    {
+      "month": "2025-12",
+      "all": 3.45,
+      "variable": 4.18,
+      "fixedLong": 3.33
+    },
+    {
+      "month": "2026-01",
+      "all": 3.45,
+      "variable": 4.12,
+      "fixedLong": 3.32
+    },
+    {
+      "month": "2026-02",
+      "all": 3.47,
+      "variable": 4.15,
+      "fixedLong": 3.35
+    },
+    {
+      "month": "2026-03",
+      "all": 3.43,
+      "variable": 4.12,
+      "fixedLong": 3.34
+    },
+    {
+      "month": "2026-04",
+      "all": 3.52,
+      "variable": 4.24,
+      "fixedLong": 3.41
+    },
+    {
+      "month": "2026-05",
+      "all": 3.55,
+      "variable": 4.4,
+      "fixedLong": 3.41
+    },
+    {
+      "month": "2026-06",
+      "all": 3.59,
+      "variable": 4.48,
+      "fixedLong": 3.47
+    },
+    {
+      "month": "2026-07",
+      "all": 3.64,
+      "variable": 4.61,
+      "fixedLong": 3.48
+    },
+    {
+      "month": "2026-08",
+      "all": 3.7,
+      "variable": 4.69,
+      "fixedLong": 3.53
+    },
+    {
+      "month": "2026-09",
+      "all": 3.76,
+      "variable": 4.79,
+      "fixedLong": 3.59
+    }
+  ]
+}

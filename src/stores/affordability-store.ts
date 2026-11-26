@@ -1,0 +1,25 @@
+import type { AffordabilityInput } from "@/lib/sim/affordability";
+import {
+  DEFAULT_FILE_COSTS,
+  DEFAULT_MAX_LTV,
+  DEFAULT_VALUATION_COSTS,
+  ESTIMATED_CREDIT_EXPENSES,
+  ESTIMATED_PURCHASE_EXPENSES,
+} from "@/lib/sim/tariffs";
+import { createRateStore } from "./create-rate-store";
+
+export const useAffordabilityStore = createRateStore<AffordabilityInput>({
+  monthlyPayment: 1_200,
+  ownFunds: 50_000,
+  years: 25,
+  repaymentType: "annuity",
+  region: "flanders",
+  deedYear: 2027,
+  maxLtv: DEFAULT_MAX_LTV,
+  inscriptionShare: 1,
+  fileCosts: DEFAULT_FILE_COSTS,
+  valuationCosts: DEFAULT_VALUATION_COSTS,
+  purchaseExpenses: ESTIMATED_PURCHASE_EXPENSES,
+  creditExpenses: ESTIMATED_CREDIT_EXPENSES,
+  netIncome: undefined,
+});
