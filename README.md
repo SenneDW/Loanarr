@@ -12,6 +12,14 @@
   Gratis · zonder account · zonder e-mailadres · je gegevens blijven in je browser
 </p>
 
+<p align="center">
+  <a href="https://loanarr.sennedewever.be">
+    <img src="docs/loanarr-film.gif" alt="Loanarr in 35 seconden: de vijf stappen van situatie tot resultaat, en je aflossingstabel." width="100%">
+  </a>
+  <br>
+  <sub>Loanarr in 35 seconden: van je situatie tot je aflossingstabel.</sub>
+</p>
+
 ---
 
 ## Ken je dat?
