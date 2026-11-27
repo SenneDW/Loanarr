@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { LoanSimulator } from "@/components/sim/loan-simulator";
+import { socialMetadata } from "@/lib/site";
+
+const title = "Aflossingstabel – Loanarr";
+const description =
+  "Vul je leenbedrag, rente en looptijd in en zie je maandlast, met per jaar hoeveel kapitaal en interest je aan de bank terugbetaalt.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  ...socialMetadata({ title, description, path: "/aflossing" }),
+};
 
 export default function AflossingPage() {
   return (

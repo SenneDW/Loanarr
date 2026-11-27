@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { glossary } from "@/lib/glossary";
+import { socialMetadata } from "@/lib/site";
+
+const title = "Begrippen – Loanarr";
+const description =
+  "Moeilijke woorden rond woonkrediet en de aankoop van je eerste woning, in gewone taal uitgelegd.";
 
 export const metadata: Metadata = {
-  title: "Begrippen – Loanarr",
-  description:
-    "Moeilijke woorden rond woonkrediet en de aankoop van je eerste woning, in gewone taal uitgelegd.",
+  title,
+  description,
+  ...socialMetadata({ title, description, path: "/begrippen" }),
 };
 
 const entries = Object.entries(glossary).sort(([, a], [, b]) =>
