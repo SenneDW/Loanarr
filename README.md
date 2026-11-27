@@ -17,7 +17,7 @@
     <img src="docs/loanarr-film.gif" alt="Loanarr in 35 seconden: de vijf stappen van situatie tot resultaat, en je aflossingstabel." width="100%">
   </a>
   <br>
-  <sub>Loanarr in 35 seconden: van je situatie tot je aflossingstabel.</sub>
+  <sub>Loanarr in 35 seconden: van je situatie tot je aflossingstabel. <a href="docs/loanarr-film.mp4">▶ Bekijk de film met geluid (HD)</a></sub>
 </p>
 
 ---
