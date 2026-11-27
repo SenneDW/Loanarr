@@ -1,4 +1,8 @@
-import { typicalFixedRate } from "@/lib/sim/rates";
+import {
+  BANK_TARIFFS,
+  type BankTariff,
+  typicalFixedRate,
+} from "@/lib/sim/rates";
 
 /**
  * Where the interest rate comes from:
@@ -19,10 +23,12 @@ export function rateFor(
   years: number,
   marketRate: number,
   forecastRate?: number,
+  tariffs: readonly BankTariff[] = BANK_TARIFFS,
 ): number {
   if (mode === "market") return marketRate;
   if (mode === "forecast") return forecastRate ?? marketRate;
-  return typicalFixedRate(Number.isFinite(years) ? years : 25).ratePercent;
+  return typicalFixedRate(Number.isFinite(years) ? years : 25, tariffs)
+    .ratePercent;
 }
 
 /**
@@ -35,6 +41,7 @@ export function applyRatePatch<T extends WithRate>(
   marketRate: number,
   patch: Partial<T>,
   forecastRate?: number,
+  tariffs: readonly BankTariff[] = BANK_TARIFFS,
 ): { input: T; mode: RateMode } {
   const next = { ...input, ...patch };
   if (patch.annualRatePercent !== undefined) {
@@ -46,6 +53,7 @@ export function applyRatePatch<T extends WithRate>(
       next.years,
       marketRate,
       forecastRate,
+      tariffs,
     );
   }
   return { input: next, mode };

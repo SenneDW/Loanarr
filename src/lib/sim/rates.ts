@@ -1,6 +1,8 @@
 /**
- * Current Belgian mortgage rates (fixed for the whole duration), from banks' own
- * published tariff sheets. Update these regularly: banks change them every few weeks.
+ * Belgian mortgage rates (fixed for the whole duration), from banks' own published
+ * tariff sheets. The site reads the live sheets every hour
+ * (src/lib/market/get-bank-tariffs.ts); the values below are the fallback when a
+ * sheet cannot be fetched or read, and the baseline for its sanity check.
  *
  * - `list`: the bank's base rate.
  * - `withProducts`: the rate when you also take the bank's own debt-balance and fire
@@ -10,12 +12,16 @@
  * Banks price per duration bracket ("≤ 20 jaar"): a 22-year loan gets the 25-year rate.
  * KBC, ING and vdk publish no tariff sheet; their rates come from personal quotes.
  */
-export const RATES_CHECKED_ON = "2026-11-26";
+import type { BankId } from "@/lib/market/bank-tariffs";
+
+export const RATES_CHECKED_ON = "2026-11-27";
 
 export const durations = [10, 15, 20, 25, 30] as const;
 export type Duration = (typeof durations)[number];
 
 export interface BankTariff {
+  /** Key for the live tariff sheet reader (src/lib/market/bank-tariffs.ts). */
+  id: BankId;
   bank: string;
   validFrom: string;
   url: string;
@@ -27,9 +33,16 @@ export interface BankTariff {
   highLtvNote?: string;
   /** True when we read the tariff sheet ourselves; false when taken from research notes. */
   verified: boolean;
+  /**
+   * Discount for the bank's own products, in percentage points, for sheets that
+   * only publish the base rate: live base rates become withProducts this way.
+   */
+  productsDiscount?: number;
+  /** True when these rates were read from the bank's sheet just now (server). */
+  live?: boolean;
 }
 
-const minus = (
+export const minus = (
   rates: Partial<Record<Duration, number>>,
   discount: number,
 ): Partial<Record<Duration, number>> =>
@@ -43,23 +56,26 @@ const minus = (
 const ARGENTA_LIST = { 10: 4.79, 15: 4.9, 20: 4.97, 25: 5.01 };
 const BNP_LIST = { 10: 5.75, 15: 5.9, 20: 5.9, 25: 6.0, 30: 6.95 };
 const ELANTIS_LIST = { 10: 4.71, 15: 4.86, 20: 4.94, 25: 5.01, 30: 5.15 };
-const BELFIUS = { 10: 4.843, 15: 4.916, 20: 4.966, 25: 4.991, 30: 5.101 };
+const BELFIUS = { 10: 4.813, 15: 4.887, 20: 4.937, 25: 4.964, 30: 5.074 };
 
 export const BANK_TARIFFS: readonly BankTariff[] = [
   {
+    id: "argenta",
     bank: "Argenta",
     validFrom: "2026-11-19",
     url: "https://www.argenta.be/content/dam/argenta/documenten/leningen/hypothecaire-lening/Tarievenkaart%20Hypothecaire%20kredieten.pdf",
     list: ARGENTA_LIST,
     withProducts: minus(ARGENTA_LIST, 0.2),
+    productsDiscount: 0.2,
     productsNote:
       "−0,10 % met schuldsaldoverzekering en −0,10 % met brandverzekering bij Argenta.",
     highLtvNote: "Geen toeslag tot 100 % quotiteit.",
     verified: true,
   },
   {
+    id: "belfius",
     bank: "Belfius",
-    validFrom: "2026-11-26",
+    validFrom: "2026-11-27",
     url: "https://www.belfius.be/imagingservlet/GetDocument?src=mifid&id=TARIFLOANFIDELITY_NL",
     list: BELFIUS,
     withProducts: BELFIUS,
@@ -70,6 +86,7 @@ export const BANK_TARIFFS: readonly BankTariff[] = [
     verified: false,
   },
   {
+    id: "crelan",
     bank: "Crelan",
     validFrom: "2026-11-23",
     url: "https://www.crelan.be/sites/default/files/documents/Tarifs_Cr%C3%A9dit-logement.pdf",
@@ -81,22 +98,26 @@ export const BANK_TARIFFS: readonly BankTariff[] = [
     verified: false,
   },
   {
+    id: "bnp",
     bank: "BNP Paribas Fortis (makelaars)",
     validFrom: "2026-11-01",
     url: "https://www.creditbrokers.bnpparibasfortis.be/Portals/0/files/NL/CB%20202611NL.pdf",
     list: BNP_LIST,
     withProducts: minus(BNP_LIST, 0.3),
+    productsDiscount: 0.3,
     productsNote:
       "−0,10 % elk voor schuldsaldoverzekering, woningverzekering en loon op een BNP-rekening.",
     highLtvNote: "+0,60 % boven 90 % quotiteit.",
     verified: false,
   },
   {
+    id: "elantis",
     bank: "Elantis",
     validFrom: "2026-11-10",
     url: "https://cdn.elantis.be/uploads/2026/11/Officieel-Tarief-583.pdf",
     list: ELANTIS_LIST,
     withProducts: minus(ELANTIS_LIST, 0.3),
+    productsDiscount: 0.3,
     productsNote:
       "−0,15 % met schuldsaldoverzekering en −0,15 % met een Belfius Pulse-rekening met domiciliëring.",
     highLtvNote: "+0,60 % tot +1,00 % boven 90 % quotiteit, volgens het EPC.",
@@ -123,9 +144,12 @@ export interface BankRate {
 }
 
 /** Each bank's rate for this duration (banks without an offer are left out). */
-export function bankRatesFor(years: number): BankRate[] {
+export function bankRatesFor(
+  years: number,
+  tariffs: readonly BankTariff[] = BANK_TARIFFS,
+): BankRate[] {
   const out: BankRate[] = [];
-  for (const tariff of BANK_TARIFFS) {
+  for (const tariff of tariffs) {
     const list = bracketFor(years, tariff.list);
     const withProducts = bracketFor(years, tariff.withProducts);
     if (list !== undefined && withProducts !== undefined) {
@@ -149,11 +173,14 @@ export interface RateSummary {
 const round2 = (n: number) => Math.round(n * 100) / 100;
 
 /** Typical rate for a duration: the average across banks, rounded to 0,01 %. */
-export function typicalFixedRate(years: number): RateSummary {
-  const rates = bankRatesFor(Math.max(years, 1));
+export function typicalFixedRate(
+  years: number,
+  tariffs: readonly BankTariff[] = BANK_TARIFFS,
+): RateSummary {
+  const rates = bankRatesFor(Math.max(years, 1), tariffs);
   if (rates.length === 0) {
     // Longer than any published bracket: fall back to the longest one.
-    return typicalFixedRate(durations[durations.length - 1]);
+    return typicalFixedRate(durations[durations.length - 1], tariffs);
   }
   const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
   const withProducts = rates.map((r) => r.withProducts);

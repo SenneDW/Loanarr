@@ -172,6 +172,49 @@
   color-scheme: dark;
 }
 
+/*
+ * Background tones (data-tone on <html>), on top of light/dark and the palette.
+ * Only surfaces change: background, cards, muted fills and borders.
+ * Light: "deep" is pure white, "soft" is off-white.
+ * Dark:  "deep" is near-black, "soft" is a lighter, dimmed grey.
+ */
+:root[data-tone="deep"]:not(.dark) {
+  --background: oklch(1 0 0);
+  --muted: oklch(0.96 calc(0.008 * var(--s)) var(--h));
+  --border: oklch(0.9 calc(0.012 * var(--s)) var(--h));
+  --sidebar: oklch(0.985 calc(0.006 * var(--s)) var(--h));
+}
+:root[data-tone="soft"]:not(.dark) {
+  --background: oklch(0.955 calc(0.008 * var(--s)) var(--h));
+  --card: oklch(0.982 calc(0.004 * var(--s)) var(--h));
+  --popover: oklch(0.985 calc(0.004 * var(--s)) var(--h));
+  --secondary: oklch(0.93 calc(0.02 * var(--s)) var(--h));
+  --muted: oklch(0.935 calc(0.01 * var(--s)) var(--h));
+  --accent: oklch(0.92 calc(0.03 * var(--s)) var(--h));
+  --border: oklch(0.88 calc(0.014 * var(--s)) var(--h));
+  --input: oklch(0.86 calc(0.016 * var(--s)) var(--h));
+  --sidebar: oklch(0.95 calc(0.008 * var(--s)) var(--h));
+}
+:root.dark[data-tone="deep"] {
+  --background: oklch(0.11 calc(0.008 * var(--s)) var(--h));
+  --card: oklch(0.15 calc(0.012 * var(--s)) var(--h));
+  --popover: oklch(0.17 calc(0.012 * var(--s)) var(--h));
+  --secondary: oklch(0.22 calc(0.03 * var(--s)) var(--h));
+  --muted: oklch(0.21 calc(0.014 * var(--s)) var(--h));
+  --accent: oklch(0.25 calc(0.04 * var(--s)) var(--h));
+}
+:root.dark[data-tone="soft"] {
+  --background: oklch(0.235 calc(0.012 * var(--s)) var(--h));
+  --card: oklch(0.275 calc(0.014 * var(--s)) var(--h));
+  --popover: oklch(0.295 calc(0.014 * var(--s)) var(--h));
+  --secondary: oklch(0.34 calc(0.03 * var(--s)) var(--h));
+  --muted: oklch(0.33 calc(0.014 * var(--s)) var(--h));
+  --muted-foreground: oklch(0.78 calc(0.02 * var(--s)) var(--h));
+  --accent: oklch(0.37 calc(0.04 * var(--s)) var(--h));
+  --border: oklch(1 0 0 / 13%);
+  --input: oklch(1 0 0 / 18%);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

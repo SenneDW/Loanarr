@@ -19,7 +19,6 @@ const couple: Situation = {
   gift: 10_000,
   rent: 950,
   otherCredits: 0,
-  bufferMonths: 6,
 };
 
 const base: AffordabilityInput = {
@@ -43,9 +42,26 @@ describe("summarizeSituation", () => {
     const s = summarizeSituation(couple);
     expect(s.totalIncome).toBe(4_600);
     expect(s.livingMinimum).toBe(LIVING_MINIMUM.couple);
-    expect(s.buffer).toBe(6 * LIVING_MINIMUM.couple);
+    // 6 months of living money (1.700) plus the comfortable payment (1.380).
+    expect(s.monthlyCosts).toBe(3_080);
+    expect(s.buffer).toBe(18_500); // 18.480, rounded to 100
+    expect(s.bufferIsEstimate).toBe(true);
     expect(s.totalAssets).toBe(75_000);
-    expect(s.suggestedOwnFunds).toBe(64_500); // 75.000 − 10.200, rounded down to 500
+    expect(s.suggestedOwnFunds).toBe(56_500); // 75.000 − 18.500
+  });
+
+  it("uses the buffer the user typed instead of the estimate", () => {
+    const s = summarizeSituation({ ...couple, buffer: 5_000 });
+    expect(s.buffer).toBe(5_000);
+    expect(s.bufferIsEstimate).toBe(false);
+    expect(s.suggestedOwnFunds).toBe(70_000);
+    expect(summarizeSituation({ ...couple, buffer: 0 }).buffer).toBe(0);
+  });
+
+  it("counts other loans in the monthly costs behind the estimate", () => {
+    const s = summarizeSituation({ ...couple, otherCredits: 300 });
+    // Comfortable payment drops by 300, the loan itself adds 300 back.
+    expect(s.monthlyCosts).toBe(1_700 + 1_080 + 300);
   });
 
   it("caps payments by ⅓ of income and by living money", () => {

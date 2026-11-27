@@ -1,19 +1,33 @@
 import { Term } from "@/components/term";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatEur, formatPercent } from "@/lib/format";
+import { formatEur, formatEurRounded, formatPercent } from "@/lib/format";
 import type {
   AffordabilityInput,
   AffordabilityResult,
 } from "@/lib/sim/affordability";
+import type { RateMode } from "@/stores/rate-sync";
+
+const RATE_SOURCE: Record<RateMode, string> = {
+  market: "marktrente",
+  forecast: "verwacht",
+  banks: "tarieflijst",
+  custom: "eigen",
+};
 
 /** Live summary shown next to the steps (desktop) so results are always in view. */
 export function AffordabilitySummary({
   result,
   input,
+  rateMode,
+  isExample = false,
   onShowPlan,
 }: {
   result: AffordabilityResult | null;
   input: AffordabilityInput;
+  /** Where the rate comes from, shown next to it. */
+  rateMode: RateMode;
+  /** True while the result still uses our starting values, not the user's. */
+  isExample?: boolean;
   onShowPlan?: () => void;
 }) {
   if (!result) {
@@ -39,9 +53,11 @@ export function AffordabilitySummary({
           {formatEur(result.maxPrice)}
         </span>
         <span className="text-sm text-primary-foreground/80">
-          {result.limitedBy === "payment"
-            ? "Beperkt door je gewenste maandlast."
-            : `Beperkt door de maximale quotiteit van ${formatPercent(input.maxLtv)}. Met meer eigen middelen kan je duurder kopen.`}
+          {isExample
+            ? `Voorbeeld met ${formatEurRounded(input.monthlyPayment)}/maand en ${formatEurRounded(input.ownFunds)} eigen middelen. Vul stap 1 in voor jouw bedrag.`
+            : result.limitedBy === "payment"
+              ? "Beperkt door je gewenste maandlast."
+              : `Beperkt door de maximale quotiteit van ${formatPercent(input.maxLtv)}. Met meer eigen middelen kan je duurder kopen.`}
         </span>
       </div>
       <dl className="grid grid-cols-2 gap-x-4 gap-y-3 px-5 py-4 text-sm tabular-nums">
@@ -57,6 +73,11 @@ export function AffordabilitySummary({
           value={formatPercent(plan.ltv)}
         />
         <SummaryItem label="Kosten" value={formatEur(costs)} />
+        <SummaryItem
+          label={`Rentevoet (${RATE_SOURCE[rateMode]})`}
+          value={formatPercent(input.annualRatePercent / 100, 2)}
+        />
+        <SummaryItem label="Looptijd" value={`${input.years} jaar`} />
       </dl>
       {plan.loan > 0 && (
         <div className="grid gap-1.5 border-t px-5 py-4 text-sm tabular-nums">
@@ -128,15 +149,17 @@ function SummaryItem({
 /** Compact bar that sticks to the top on small screens. */
 export function AffordabilitySummaryBar({
   result,
+  isExample = false,
 }: {
   result: AffordabilityResult | null;
+  isExample?: boolean;
 }) {
   if (!result) return null;
   return (
     <div className="sticky top-0 z-10 -mx-4 flex items-center justify-between gap-4 border-b bg-primary px-4 py-2.5 text-primary-foreground sm:-mx-6 sm:px-6 lg:hidden">
       <div className="grid">
         <span className="text-xs text-primary-foreground/80">
-          Maximaal aankoopbedrag
+          {isExample ? "Voorbeeld · vul stap 1 in" : "Maximaal aankoopbedrag"}
         </span>
         <span className="text-lg font-semibold tabular-nums">
           {formatEur(result.maxPrice)}

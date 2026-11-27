@@ -61,6 +61,8 @@ export function NumberField({
       ? n.toLocaleString(LOCALE, { maximumFractionDigits: decimals })
       : "";
   const [text, setText] = useState(() => format(value));
+  // Decimals in the step (0.05 → 2), to avoid float noise like 3.6500000001.
+  const stepDecimals = (String(step).split(".")[1] ?? "").length;
 
   // Keep the text in sync when the value changes elsewhere (e.g. the slider).
   // biome-ignore lint/correctness/useExhaustiveDependencies: only react to value changes
@@ -68,21 +70,49 @@ export function NumberField({
     if (!Object.is(parseBelgianNumber(text), value)) setText(format(value));
   }, [value]);
 
-  const input = (
+  const inputProps = {
+    id,
+    inputMode: "decimal" as const,
+    value: text,
+    "aria-invalid": error ? true : undefined,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+      setText(e.target.value);
+      onChange(parseBelgianNumber(e.target.value));
+    },
+    onBlur: () => setText(format(value)),
+    // Arrow up/down step like the slider (Shift: ten steps). Snaps to the step
+    // grid, so 2.537 goes to 2.550 with steps of 50. No upper limit: the
+    // slider's max is a convenience, not a rule (incomes can be higher).
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      const size = e.shiftKey ? step * 10 : step;
+      const current = Number.isFinite(value) ? value : min;
+      const k = current / size;
+      let next =
+        e.key === "ArrowUp"
+          ? (Math.floor(k + 1e-9) + 1) * size
+          : (Math.ceil(k - 1e-9) - 1) * size;
+      next = Math.max(min, Number(next.toFixed(stepDecimals)));
+      setText(format(next));
+      onChange(next);
+    },
+  };
+
+  // With a slider: a compact input next to it, unit outside.
+  // Without one: a full-width input under the label, unit inside the box,
+  // so the field reads as one unit with its label.
+  const input = showSlider ? (
     <div className="flex shrink-0 items-center gap-2">
-      <Input
-        id={id}
-        inputMode="decimal"
-        className="h-9 w-28 text-right tabular-nums"
-        value={text}
-        aria-invalid={error ? true : undefined}
-        onChange={(e) => {
-          setText(e.target.value);
-          onChange(parseBelgianNumber(e.target.value));
-        }}
-        onBlur={() => setText(format(value))}
-      />
+      <Input {...inputProps} className="h-9 w-28 text-right tabular-nums" />
       <span className="w-8 text-sm text-muted-foreground">{unit}</span>
+    </div>
+  ) : (
+    <div className="relative w-full">
+      <Input {...inputProps} className="h-9 pr-9 tabular-nums" />
+      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+        {unit}
+      </span>
     </div>
   );
 
@@ -94,7 +124,7 @@ export function NumberField({
         </Label>
         {info}
       </div>
-      <div className="flex items-center justify-end gap-4">
+      <div className="flex items-center gap-4">
         {showSlider && (
           <Slider
             aria-label={label}

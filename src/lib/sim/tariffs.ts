@@ -1,10 +1,13 @@
 /**
  * Belgian tariffs for buying a first (sole own) home.
  *
- * Every value lists its source and when it was checked. Tariffs change: re-check
- * these before relying on them, and update `TARIFFS_CHECKED_ON`.
+ * Every value lists its source. The site checks daily that the official sources
+ * still state the registration duties and notary fees below
+ * (src/lib/market/tariff-checks.ts); the footer turns amber when one no longer
+ * does. `TARIFFS_CHECKED_ON` is the last check by hand, shown when no source
+ * can be reached.
  */
-export const TARIFFS_CHECKED_ON = "2026-11-26";
+export const TARIFFS_CHECKED_ON = "2026-11-27";
 
 export const regions = ["flanders", "wallonia", "brussels"] as const;
 export type Region = (typeof regions)[number];

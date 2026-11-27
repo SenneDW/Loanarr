@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import snapshot from "@/lib/market/snapshot.json";
+import { BANK_TARIFFS, type BankTariff } from "@/lib/sim/rates";
 import { applyRatePatch, type RateMode, rateFor } from "./rate-sync";
 
 interface WithRate {
@@ -14,12 +15,16 @@ export interface RateStore<T extends WithRate> {
   marketRate: number;
   /** Estimated market rate for today (undefined until it has loaded). */
   forecastRate?: number;
+  /** Bank tariffs behind the "banks" rate: bundled until the live ones load. */
+  bankTariffs: readonly BankTariff[];
   setInput: (patch: Partial<T>) => void;
   setRateMode: (mode: Exclude<RateMode, "custom">) => void;
   /** Called once the live market data has loaded. */
   setMarketRate: (rate: number) => void;
   /** Called once today's estimate is known. */
   setForecastRate: (rate: number) => void;
+  /** Called once the live bank tariffs have loaded. */
+  setBankTariffs: (tariffs: readonly BankTariff[]) => void;
   reset: () => void;
 }
 
@@ -39,6 +44,7 @@ export function createRateStore<T extends WithRate>(
     rateMode: "market",
     marketRate: SNAPSHOT_MARKET_RATE,
     forecastRate: undefined,
+    bankTariffs: BANK_TARIFFS,
     setInput: (patch) =>
       set((s) => {
         const next = applyRatePatch(
@@ -47,6 +53,7 @@ export function createRateStore<T extends WithRate>(
           s.marketRate,
           patch,
           s.forecastRate,
+          s.bankTariffs,
         );
         return { input: next.input, rateMode: next.mode };
       }),
@@ -60,6 +67,7 @@ export function createRateStore<T extends WithRate>(
             s.input.years,
             s.marketRate,
             s.forecastRate,
+            s.bankTariffs,
           ),
         },
       })),
@@ -80,6 +88,24 @@ export function createRateStore<T extends WithRate>(
               input: { ...s.input, annualRatePercent: rate },
             }
           : { forecastRate: rate },
+      ),
+    setBankTariffs: (tariffs) =>
+      set((s) =>
+        s.rateMode === "banks"
+          ? {
+              bankTariffs: tariffs,
+              input: {
+                ...s.input,
+                annualRatePercent: rateFor(
+                  "banks",
+                  s.input.years,
+                  s.marketRate,
+                  s.forecastRate,
+                  tariffs,
+                ),
+              },
+            }
+          : { bankTariffs: tariffs },
       ),
     reset: () =>
       set((s) => ({

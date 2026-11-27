@@ -3,6 +3,7 @@
 import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
+import { useFlanders2027Enacted } from "@/components/market-context";
 import { Term } from "@/components/term";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +14,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatEurRounded } from "@/lib/format";
 import {
   type AffordabilityInput,
   affordabilityInputSchema,
   maxPurchasePrice,
 } from "@/lib/sim/affordability";
+import { situationSchema, summarizeSituation } from "@/lib/sim/situation";
 import {
   type DeedYear,
   type Region,
@@ -26,15 +29,19 @@ import {
 import type { RepaymentType } from "@/lib/sim/types";
 import { cn } from "@/lib/utils";
 import { fieldErrors } from "@/lib/validation";
-import { useAffordabilityStore } from "@/stores/affordability-store";
+import {
+  DEFAULT_MONTHLY_PAYMENT,
+  DEFAULT_OWN_FUNDS,
+  useAffordabilityStore,
+} from "@/stores/affordability-store";
 import { useLoanStore } from "@/stores/loan-store";
+import { hasSituation, useSituationStore } from "@/stores/situation-store";
 import {
   AffordabilitySummary,
   AffordabilitySummaryBar,
 } from "./affordability-summary";
 import { BankComparison } from "./bank-comparison";
 import { FinancialPlanCard } from "./financial-plan";
-import { HowItWorks } from "./how-it-works";
 import {
   DeedYearInfo,
   DurationInfo,
@@ -129,6 +136,14 @@ export function AffordabilityCalculator() {
   const router = useRouter();
   const rateMode = useAffordabilityStore((s) => s.rateMode);
 
+  // Until the user enters anything, the result is based on our starting values:
+  // say so, so nobody reads it as their own amount.
+  const situation = useSituationStore((s) => s.situation);
+  const isExample =
+    !hasSituation(situation) &&
+    input.monthlyPayment === DEFAULT_MONTHLY_PAYMENT &&
+    input.ownFunds === DEFAULT_OWN_FUNDS;
+
   /** Opens the repayment table with this result's loan, rate and duration. */
   const openRepaymentTable = () => {
     if (!result) return;
@@ -153,8 +168,7 @@ export function AffordabilityCalculator() {
 
   return (
     <div ref={topRef} className="grid scroll-mt-4 gap-6">
-      <AffordabilitySummaryBar result={result} />
-      {step === 0 && <HowItWorks />}
+      <AffordabilitySummaryBar result={result} isExample={isExample} />
       <Stepper step={step} onSelect={goTo} />
 
       <div
@@ -197,7 +211,6 @@ export function AffordabilityCalculator() {
                   ratePercent={input.annualRatePercent}
                   years={input.years}
                   repaymentType={input.repaymentType}
-                  onEditSituation={() => goTo(0)}
                 />
                 <FinancialPlanCard
                   plan={result.plan}
@@ -249,6 +262,8 @@ export function AffordabilityCalculator() {
           <AffordabilitySummary
             result={result}
             input={input}
+            rateMode={rateMode}
+            isExample={isExample}
             onShowPlan={
               step === RESULT_STEP ? undefined : () => goTo(RESULT_STEP)
             }
@@ -258,7 +273,12 @@ export function AffordabilityCalculator() {
 
       {step === RESULT_STEP && result && (
         <div className="lg:hidden">
-          <AffordabilitySummary result={result} input={input} />
+          <AffordabilitySummary
+            result={result}
+            input={input}
+            rateMode={rateMode}
+            isExample={isExample}
+          />
         </div>
       )}
     </div>
@@ -311,11 +331,72 @@ function Stepper({
   );
 }
 
+/**
+ * Explains where the monthly payment and own funds in step 2 come from, as long
+ * as they still match what step 1 proposed. Once the user changes them here,
+ * the explanation disappears.
+ */
+function useStep1Origin(monthlyPayment: number, ownFunds: number) {
+  const situation = useSituationStore((s) => s.situation);
+
+  return useMemo(() => {
+    const parsed = situationSchema.safeParse(situation);
+    if (!parsed.success || !hasSituation(parsed.data)) return {};
+    const s = parsed.data;
+    const sum = summarizeSituation(s);
+    const eur = formatEurRounded;
+
+    let payment: React.ReactNode;
+    if (sum.totalIncome > 0 && monthlyPayment === sum.comfortablePayment) {
+      payment = (
+        <>
+          Uit stap 1: ± 30 % van je netto inkomen van {eur(sum.totalIncome)}
+          {s.otherCredits > 0 &&
+            `, min ${eur(s.otherCredits)} voor andere kredieten`}
+          .
+        </>
+      );
+    } else if (sum.totalIncome > 0 && monthlyPayment === sum.maxPayment) {
+      payment = (
+        <>
+          Uit stap 1: het maximum dat een bank meestal nog aanvaardt bij een
+          inkomen van {eur(sum.totalIncome)}.
+        </>
+      );
+    }
+
+    let funds: React.ReactNode;
+    if (ownFunds === sum.suggestedOwnFunds) {
+      const sources = [
+        s.savings > 0 && "spaargeld",
+        s.useInvestments && s.investments > 0 && "beleggingen",
+        s.gift > 0 && "schenking",
+      ].filter(Boolean) as string[];
+      const what =
+        sources.length > 1
+          ? `${sources.slice(0, -1).join(", ")} en ${sources.at(-1)}`
+          : sources[0];
+      funds = (
+        <>
+          Uit stap 1: {eur(sum.totalAssets)}
+          {what && ` ${what}`}
+          {sum.buffer > 0 &&
+            `, min ${eur(sum.buffer)} buffer${sum.bufferIsEstimate ? " (schatting)" : ""}`}
+          , afgerond naar beneden.
+        </>
+      );
+    }
+
+    return { payment, ownFunds: funds };
+  }, [situation, monthlyPayment, ownFunds]);
+}
+
 function BudgetStep({ errors }: { errors: Errors }) {
   const input = useAffordabilityStore((s) => s.input);
   const setInput = useAffordabilityStore((s) => s.setInput);
   const rateMode = useAffordabilityStore((s) => s.rateMode);
   const setRateMode = useAffordabilityStore((s) => s.setRateMode);
+  const fromStep1 = useStep1Origin(input.monthlyPayment, input.ownFunds);
 
   return (
     <div className="grid gap-x-8 gap-y-5 md:grid-cols-2">
@@ -332,6 +413,7 @@ function BudgetStep({ errors }: { errors: Errors }) {
         min={300}
         max={4_000}
         step={25}
+        hint={fromStep1.payment}
         error={errors.monthlyPayment}
       />
       <NumberField
@@ -348,11 +430,13 @@ function BudgetStep({ errors }: { errors: Errors }) {
         max={300_000}
         step={1_000}
         hint={
-          <>
-            Spaargeld, schenkingen … Hiermee betaal je eerst de kosten en wat de
-            bank niet leent (zie <Term id="quotiteit" />
-            ).
-          </>
+          fromStep1.ownFunds ?? (
+            <>
+              Spaargeld, schenkingen … Hiermee betaal je eerst de kosten en wat
+              de bank niet leent (zie <Term id="quotiteit" />
+              ).
+            </>
+          )
         }
         error={errors.ownFunds}
       />
@@ -401,6 +485,7 @@ function BudgetStep({ errors }: { errors: Errors }) {
 function HomeStep() {
   const input = useAffordabilityStore((s) => s.input);
   const setInput = useAffordabilityStore((s) => s.setInput);
+  const enacted2027 = useFlanders2027Enacted();
 
   return (
     <div className="grid gap-6">
@@ -430,11 +515,24 @@ function HomeStep() {
             input.region === "flanders" ? (
               <>
                 In Vlaanderen 2 % <Term id="registratierechten" /> voor je{" "}
-                <Term id="enigeEigenWoning" /> in 2026. Vanaf 2027 is 3 %
-                aangekondigd. Telt: datum van de <Term id="notarieleAkte" />,
-                niet van het <Term id="compromis" />.
+                <Term id="enigeEigenWoning" /> in 2026. Vanaf 2027{" "}
+                {enacted2027 ? "geldt 3 %" : "is 3 % aangekondigd"}. Telt: datum
+                van de <Term id="notarieleAkte" />, niet van het{" "}
+                <Term id="compromis" />.
               </>
-            ) : undefined
+            ) : input.region === "wallonia" ? (
+              <>
+                In Wallonië 3 % <Term id="registratierechten" /> voor je{" "}
+                <Term id="enigeEigenWoning" />. De datum van de akte verandert
+                hier niets.
+              </>
+            ) : (
+              <>
+                In Brussel geen <Term id="registratierechten" /> op de eerste
+                €&nbsp;200.000 (prijs tot €&nbsp;600.000). De datum van de akte
+                verandert hier niets.
+              </>
+            )
           }
         />
         <Segmented

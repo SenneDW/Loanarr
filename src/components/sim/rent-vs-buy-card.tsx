@@ -10,6 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { Term } from "@/components/term";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -25,7 +26,13 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { formatEur, formatEurRounded, formatPercent } from "@/lib/format";
+import { Input } from "@/components/ui/input";
+import {
+  formatEur,
+  formatEurRounded,
+  formatPercent,
+  LOCALE,
+} from "@/lib/format";
 import type { AffordabilityResult } from "@/lib/sim/affordability";
 import {
   compareRentVsBuy,
@@ -35,6 +42,7 @@ import {
 import type { RepaymentType } from "@/lib/sim/types";
 import { cn } from "@/lib/utils";
 import { hasSituation, useSituationStore } from "@/stores/situation-store";
+import { parseBelgianNumber } from "./number-field";
 
 const chartConfig = {
   buyWealth: { label: "Kopen", color: "var(--chart-1)" },
@@ -49,16 +57,16 @@ export function RentVsBuyCard({
   ratePercent,
   years,
   repaymentType,
-  onEditSituation,
 }: {
   result: AffordabilityResult;
   ratePercent: number;
   years: number;
   repaymentType: RepaymentType;
-  onEditSituation: () => void;
 }) {
   const situation = useSituationStore((s) => s.situation);
+  const setSituation = useSituationStore((s) => s.setSituation);
   const rent = situation.rent;
+  const setRent = (value: number) => setSituation({ rent: value });
   const [horizon, setHorizon] = useState<(typeof horizons)[number]>(15);
   const [assumptions, setAssumptions] =
     useState<RentVsBuyAssumptions>(DEFAULT_ASSUMPTIONS);
@@ -91,13 +99,7 @@ export function RentVsBuyCard({
           <span className="text-muted-foreground">
             Huur je nu? Vul je huur in om kopen en huren te vergelijken.
           </span>
-          <button
-            type="button"
-            onClick={onEditSituation}
-            className="font-medium text-primary hover:underline"
-          >
-            Huur invullen →
-          </button>
+          <RentInput value={rent} onCommit={setRent} withButton />
         </CardContent>
       </Card>
     );
@@ -118,6 +120,10 @@ export function RentVsBuyCard({
               Je vermogen na {horizon} jaar: deze woning kopen, of blijven huren
               aan {formatEurRounded(rent)}/maand en je eigen inbreng beleggen.
             </CardDescription>
+            <div className="mt-1 flex items-center gap-2 text-sm">
+              <span className="text-muted-foreground">Huur per maand</span>
+              <RentInput value={rent} onCommit={setRent} />
+            </div>
           </div>
           <div className="flex rounded-lg bg-muted p-0.5 text-xs">
             {horizons.map((h) => (
@@ -291,6 +297,66 @@ export function RentVsBuyCard({
         </details>
       </CardContent>
     </Card>
+  );
+}
+
+/**
+ * Monthly rent, saved on Enter, blur or the button. Not on every keystroke:
+ * the first digit would already swap the prompt for the full comparison.
+ */
+function RentInput({
+  value,
+  onCommit,
+  withButton = false,
+}: {
+  value: number;
+  onCommit: (value: number) => void;
+  withButton?: boolean;
+}) {
+  const format = (n: number) => (n > 0 ? n.toLocaleString(LOCALE) : "");
+  const [text, setText] = useState(() => format(value));
+  const [synced, setSynced] = useState(value);
+  // Follow changes made elsewhere (e.g. step 1).
+  if (synced !== value) {
+    setSynced(value);
+    setText(format(value));
+  }
+
+  const commit = () => {
+    const parsed = parseBelgianNumber(text);
+    const next = Number.isFinite(parsed) && parsed > 0 ? Math.round(parsed) : 0;
+    if (next !== value) onCommit(next);
+    else setText(format(value));
+  };
+
+  return (
+    <form
+      className="flex items-center gap-2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        commit();
+      }}
+    >
+      <div className="relative w-32">
+        <Input
+          inputMode="decimal"
+          aria-label="Huur per maand"
+          placeholder="bv. 950"
+          className="h-9 pr-8 tabular-nums"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={commit}
+        />
+        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">
+          €
+        </span>
+      </div>
+      {withButton && (
+        <Button type="submit" size="sm">
+          Vergelijk →
+        </Button>
+      )}
+    </form>
   );
 }
 

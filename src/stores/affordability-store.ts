@@ -8,9 +8,13 @@ import {
 } from "@/lib/sim/tariffs";
 import { createRateStore } from "./create-rate-store";
 
+/** Starting values, shown as an example until the user fills in their own. */
+export const DEFAULT_MONTHLY_PAYMENT = 1_200;
+export const DEFAULT_OWN_FUNDS = 50_000;
+
 export const useAffordabilityStore = createRateStore<AffordabilityInput>({
-  monthlyPayment: 1_200,
-  ownFunds: 50_000,
+  monthlyPayment: DEFAULT_MONTHLY_PAYMENT,
+  ownFunds: DEFAULT_OWN_FUNDS,
   years: 25,
   repaymentType: "annuity",
   region: "flanders",

@@ -1,3 +1,4 @@
+import { useFlanders2027Enacted, useMarket } from "@/components/market-context";
 import { Term } from "@/components/term";
 import {
   Card,
@@ -18,6 +19,15 @@ export function FinancialPlanCard({
   plan: Plan;
   rule: RegistrationRule;
 }) {
+  const { tariffChecks } = useMarket();
+  // "Aangekondigd" until the Flemish page confirms the 2027 rate.
+  const enacted2027 = useFlanders2027Enacted();
+  const provisional = rule.provisional && !enacted2027;
+  // The daily check date when every source confirmed our figures.
+  const allConfirmed =
+    tariffChecks.sources.length > 0 &&
+    tariffChecks.sources.every((s) => s.status === "ok");
+  const checkedOn = allConfirmed ? tariffChecks.checkedAt : TARIFFS_CHECKED_ON;
   const notaryPurchase =
     plan.purchase.notaryFee +
     plan.purchase.adminFee +
@@ -43,7 +53,7 @@ export function FinancialPlanCard({
                   <>
                     <Term id="registratierechten" cap /> (
                     {formatPercent(rule.rate)}
-                    {rule.provisional ? ", aangekondigd" : ""})
+                    {provisional ? ", aangekondigd" : ""})
                   </>
                 }
                 value={plan.purchase.registrationDuty}
@@ -126,10 +136,10 @@ export function FinancialPlanCard({
           Notariskosten volgens het wettelijk barema (schalen Jbis en Gbis,
           geïndexeerd op 1 januari 2026). Uitgaven zoals opzoekingen en
           retributies zijn geschat en verschillen per dossier.
-          {rule.provisional &&
+          {provisional &&
             " Het Vlaamse tarief van 3 % vanaf 2027 is aangekondigd maar nog niet definitief goedgekeurd."}{" "}
           Tarieven gecontroleerd op{" "}
-          {new Date(TARIFFS_CHECKED_ON).toLocaleDateString("nl-BE")}.
+          {new Date(checkedOn).toLocaleDateString("nl-BE")}.
         </p>
       </CardContent>
     </Card>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Term } from "@/components/term";
 import { Button } from "@/components/ui/button";
 import { formatEurRounded, formatPercent } from "@/lib/format";
@@ -10,13 +10,20 @@ import {
   maxPurchasePrice,
 } from "@/lib/sim/affordability";
 import {
+  ESTIMATE_BUFFER_MONTHS,
+  estimateBuffer,
   type Household,
+  type SituationSummary,
   situationSchema,
   summarizeSituation,
 } from "@/lib/sim/situation";
 import { cn } from "@/lib/utils";
 import { useAffordabilityStore } from "@/stores/affordability-store";
-import { hasSituation, useSituationStore } from "@/stores/situation-store";
+import {
+  emptySituation,
+  hasSituation,
+  useSituationStore,
+} from "@/stores/situation-store";
 import { InfoHint } from "./info-hint";
 import { NumberField } from "./number-field";
 import { Segmented } from "./segmented";
@@ -32,6 +39,12 @@ export function SituationStep({ onApplied }: { onApplied: () => void }) {
   const set = useSituationStore((s) => s.setSituation);
   const couple = situation.household === "couple";
   const num = (v: number) => (Number.isFinite(v) ? v : 0);
+  // Computed even before anything is filled in: the buffer field shows our
+  // estimate from the start.
+  const summary = useMemo(() => {
+    const parsed = situationSchema.safeParse(situation);
+    return summarizeSituation(parsed.success ? parsed.data : emptySituation);
+  }, [situation]);
 
   return (
     <div className="grid gap-6">
@@ -136,21 +149,28 @@ export function SituationStep({ onApplied }: { onApplied: () => void }) {
         <NumberField
           label="Buffer die je wil houden"
           info={
-            <InfoHint title="Buffer">
-              <p>
-                Een <Term id="buffer" /> is spaargeld dat je níet in de woning
-                steekt. Nieuwe eigenaars krijgen vaak onverwachte kosten
-                (verhuis, herstellingen). 3 tot 6 maanden <Term id="leefgeld" />{" "}
-                is een goede vuistregel.
-              </p>
+            <InfoHint title="Buffer" wide>
+              <BufferInfo
+                summary={summary}
+                household={situation.household}
+                childCount={situation.children}
+                otherCredits={situation.otherCredits}
+                onPick={(buffer) => set({ buffer })}
+              />
             </InfoHint>
           }
-          unit="mnd"
-          value={situation.bufferMonths}
-          onChange={(v) => set({ bufferMonths: Math.round(num(v)) })}
+          unit="€"
+          value={summary.buffer}
+          onChange={(v) => set({ buffer: num(v) })}
           min={0}
-          max={12}
-          step={1}
+          max={50_000}
+          step={500}
+          hint={
+            <BufferHint
+              summary={summary}
+              onUseEstimate={() => set({ buffer: undefined })}
+            />
+          }
         />
       </div>
 
@@ -162,6 +182,126 @@ export function SituationStep({ onApplied }: { onApplied: () => void }) {
         voor nieuwe leningen en rekenen we dus niet mee.
       </p>
     </div>
+  );
+}
+
+/** Under the buffer field: where our estimate comes from, or a way back to it. */
+function BufferHint({
+  summary,
+  onUseEstimate,
+}: {
+  summary: SituationSummary;
+  onUseEstimate: () => void;
+}) {
+  const estimate = estimateBuffer(summary.monthlyCosts, ESTIMATE_BUFFER_MONTHS);
+  if (summary.bufferIsEstimate) {
+    return (
+      <>
+        Onze schatting: {ESTIMATE_BUFFER_MONTHS} maanden ×{" "}
+        {formatEurRounded(summary.monthlyCosts)} vaste kosten per maand. Pas
+        gerust aan.
+      </>
+    );
+  }
+  return (
+    <>
+      {summary.buffer === 0
+        ? "Geen buffer: al je spaargeld gaat naar de aankoop. "
+        : "Je eigen bedrag. "}
+      <button
+        type="button"
+        onClick={onUseEstimate}
+        className="font-medium text-primary hover:underline"
+      >
+        Gebruik onze schatting ({formatEurRounded(estimate)})
+      </button>
+    </>
+  );
+}
+
+/** Info card: what a month costs, buffer estimates to pick from, and what banks want. */
+function BufferInfo({
+  summary,
+  household,
+  childCount,
+  otherCredits,
+  onPick,
+}: {
+  summary: SituationSummary;
+  household: Household;
+  childCount: number;
+  otherCredits: number;
+  onPick: (buffer: number) => void;
+}) {
+  const eur = formatEurRounded;
+  const payment = summary.monthlyCosts - summary.livingMinimum - otherCredits;
+  const who = [
+    household === "couple" ? "met twee" : "alleen",
+    childCount > 0 && `${childCount} ${childCount === 1 ? "kind" : "kinderen"}`,
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  return (
+    <>
+      <p>
+        Een <Term id="buffer" /> is spaargeld dat je níet in de woning steekt,
+        voor verhuis, herstellingen of een periode zonder inkomen. Reken met 3
+        tot 6 maanden aan vaste kosten.
+      </p>
+      <div className="grid gap-1 rounded-md bg-muted/60 p-3 text-xs tabular-nums">
+        <span className="font-medium text-foreground">
+          Vaste kosten per maand (schatting)
+        </span>
+        <span className="flex justify-between gap-3">
+          <span>
+            <Term id="leefgeld" cap /> ({who})
+          </span>
+          <span>{eur(summary.livingMinimum)}</span>
+        </span>
+        {payment > 0 && (
+          <span className="flex justify-between gap-3">
+            <span>Maandlast lening (comfortabel)</span>
+            <span>{eur(payment)}</span>
+          </span>
+        )}
+        {otherCredits > 0 && (
+          <span className="flex justify-between gap-3">
+            <span>Andere kredieten</span>
+            <span>{eur(otherCredits)}</span>
+          </span>
+        )}
+        <span className="flex justify-between gap-3 border-t pt-1 font-semibold text-foreground">
+          <span>Totaal</span>
+          <span>{eur(summary.monthlyCosts)}</span>
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {[3, 6].map((months) => {
+          const amount = estimateBuffer(summary.monthlyCosts, months);
+          return (
+            <button
+              key={months}
+              type="button"
+              onClick={() => onPick(amount)}
+              className="grid rounded-md border px-3 py-2 text-left transition-colors hover:border-primary"
+            >
+              <span className="text-xs text-muted-foreground">
+                {months} maanden
+              </span>
+              <span className="font-semibold tabular-nums">{eur(amount)}</span>
+            </button>
+          );
+        })}
+      </div>
+      <p className="text-xs text-muted-foreground">
+        Wat een bank verwacht: een vaste buffer eisen banken niet, maar
+        spaargeld dat na de aankoop overblijft, zien ze graag. Wel willen ze dat
+        er na je maandlast elke maand genoeg leefgeld overblijft. Wij rekenen
+        met ±{eur(summary.livingMinimum)} voor jouw gezin; elke bank hanteert
+        eigen normen.
+      </p>
+    </>
   );
 }
 
@@ -192,6 +332,34 @@ function Proposal({ onApplied }: { onApplied: () => void }) {
       maximal: scenario(summary.maxPayment),
     };
   }, [situation, input]);
+
+  // Keep step 2 in line with what is filled in here, without needing a click
+  // on a proposal: own funds, income and the comfortable monthly payment.
+  // Only on changes, not on mount, so revisiting this step never overwrites
+  // amounts edited in step 2.
+  const suggestedOwnFunds = data?.summary.suggestedOwnFunds;
+  const totalIncome = data?.summary.totalIncome;
+  const comfortablePayment = data?.comfortable.monthlyPayment;
+  const synced = useRef({ suggestedOwnFunds, totalIncome, comfortablePayment });
+  useEffect(() => {
+    const prev = synced.current;
+    if (
+      prev.suggestedOwnFunds === suggestedOwnFunds &&
+      prev.totalIncome === totalIncome &&
+      prev.comfortablePayment === comfortablePayment
+    )
+      return;
+    synced.current = { suggestedOwnFunds, totalIncome, comfortablePayment };
+    if (suggestedOwnFunds === undefined) return;
+    setInput({
+      ownFunds: suggestedOwnFunds,
+      netIncome: totalIncome || undefined,
+      // No income yet (only savings filled in): keep the current payment.
+      ...(comfortablePayment !== undefined && comfortablePayment > 0
+        ? { monthlyPayment: comfortablePayment }
+        : {}),
+    });
+  }, [suggestedOwnFunds, totalIncome, comfortablePayment, setInput]);
 
   if (!data) {
     return (

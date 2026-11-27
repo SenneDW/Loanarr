@@ -7,7 +7,6 @@ import {
 } from "@/components/market-context";
 import { Term } from "@/components/term";
 import { formatPercent, monthLabel } from "@/lib/format";
-import type { RateForecast } from "@/lib/market/forecast";
 import { releaseStatus } from "@/lib/market/release";
 import { typicalFixedRate } from "@/lib/sim/rates";
 import { cn } from "@/lib/utils";
@@ -36,11 +35,17 @@ export function RateHint({
   mode: RateMode;
   onModeChange: (mode: Exclude<RateMode, "custom">) => void;
 }) {
-  const { negotiatedFixed, change3m, forecasts, yieldsUntil } = useMarket();
+  const {
+    negotiatedFixed,
+    change3m,
+    forecasts,
+    yieldsUntil,
+    banks: live,
+  } = useMarket();
   const today = useToday();
   const forecast = forecastForToday(forecasts, today);
   const safeYears = Number.isFinite(years) && years > 0 ? years : 25;
-  const banks = typicalFixedRate(safeYears);
+  const banks = typicalFixedRate(safeYears, live.tariffs);
   const rising = change3m !== undefined && change3m > 0.05;
 
   const options: {
@@ -72,12 +77,14 @@ export function RateHint({
   });
 
   return (
-    <div className="grid gap-2 rounded-lg bg-primary/5 p-3 text-xs ring-1 ring-primary/15">
-      <span className="font-medium">Welke rente gebruiken we?</span>
+    // Sized by the panel's own width (container query), not the screen: the
+    // panel sits in a narrow column on mid-size screens.
+    <div className="@container grid gap-3 rounded-lg bg-primary/5 p-3 text-xs leading-relaxed ring-1 ring-primary/15 sm:p-4">
+      <span className="text-sm font-medium">Welke rente gebruiken we?</span>
       <div
         className={cn(
           "grid gap-2",
-          options.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2",
+          options.length === 3 ? "@2xl:grid-cols-3" : "@md:grid-cols-2",
         )}
       >
         {options.map((o) => (
@@ -87,13 +94,13 @@ export function RateHint({
             onClick={() => onModeChange(o.mode)}
             aria-pressed={mode === o.mode}
             className={cn(
-              "grid content-start gap-0.5 rounded-md border bg-card px-3 py-2 text-left transition-colors hover:border-primary/60",
+              "grid content-start gap-1 rounded-md border bg-card px-3 py-2.5 text-left transition-colors hover:border-primary/60",
               mode === o.mode && "border-primary ring-1 ring-primary",
             )}
           >
-            <span className="flex items-baseline justify-between gap-2">
-              <span className="font-semibold">{o.title}</span>
-              <span className="text-sm font-semibold text-primary tabular-nums">
+            <span className="flex items-baseline justify-between gap-3">
+              <span className="text-sm font-semibold">{o.title}</span>
+              <span className="text-base font-semibold text-primary tabular-nums">
                 {pct(o.rate)}
               </span>
             </span>
@@ -107,43 +114,67 @@ export function RateHint({
         </p>
       )}
       {negotiatedFixed.month && (
-        <FreshnessNote
-          month={negotiatedFixed.month}
-          today={today}
-          forecast={forecast}
-          yieldsUntil={yieldsUntil}
-        />
+        <FreshnessNote month={negotiatedFixed.month} today={today} />
       )}
-      <p className="text-muted-foreground">
-        {rising && (
-          <>
-            De rente stijgt (+{change3m?.toLocaleString("nl-BE")}{" "}
-            <Term id="procentpunt">procentpunt</Term> in 3 maanden): reken met
-            wat marge.{" "}
-          </>
-        )}
-        De <Term id="marktrente" /> komt van de <Term id="nbb" />. Banken
-        publiceren hogere <Term id="affichetarief">affichetarieven</Term> op hun{" "}
-        <Term id="tarieflijst">tarieflijst</Term> (spreiding {pct(banks.min)} –{" "}
-        {pct(banks.max)}). Na onderhandeling of via een{" "}
-        <Term id="kredietmakelaar" /> kom je meestal ergens tussen de marktrente
-        en de tarieflijst uit.
-      </p>
+      {rising && (
+        <p className="text-muted-foreground">
+          De rente stijgt (+{change3m?.toLocaleString("nl-BE")}{" "}
+          <Term id="procentpunt">procentpunt</Term> in 3 maanden): reken met wat
+          marge.
+        </p>
+      )}
+      <details className="group text-muted-foreground">
+        <summary className="cursor-pointer list-none font-medium text-foreground hover:text-primary [&::-webkit-details-marker]:hidden">
+          <span className="inline-block transition-transform group-open:rotate-90">
+            ›
+          </span>{" "}
+          Meer uitleg over deze cijfers
+        </summary>
+        <div className="mt-2 grid gap-2">
+          {negotiatedFixed.month && (
+            <p>
+              Het is een gemiddelde over alle kopers, en veel van die leningen
+              hebben de rente van een offerte van enkele maanden eerder. Een
+              offerte die je vandaag krijgt, ligt daarom vaak hoger, zeker als
+              je meer dan 90 % leent.
+            </p>
+          )}
+          {forecast && (
+            <p>
+              <span className="font-semibold text-foreground">
+                Verwachte rente nu
+              </span>{" "}
+              ({pct(forecast.ratePercent)} voor {monthLabel(forecast.month)}):
+              onze schatting van wat de NBB voor deze maand zal publiceren. We
+              nemen de rente van {monthLabel(forecast.fromMonth)} en tellen
+              erbij op hoeveel de Europese 10-jaarsrente sindsdien bewoog;
+              hypotheekrentes volgen die met zo&apos;n twee maanden vertraging.
+              {yieldsUntil &&
+                ` Gebaseerd op beursdata tot ${dayLabel(yieldsUntil)}.`}{" "}
+              Het blijft een gemiddelde, geen offerte.
+            </p>
+          )}
+          <p>
+            De <Term id="marktrente" /> komt van de <Term id="nbb" />. Banken
+            publiceren hogere <Term id="affichetarief">affichetarieven</Term> op
+            hun <Term id="tarieflijst">tarieflijst</Term> (spreiding{" "}
+            {pct(banks.min)} – {pct(banks.max)}). Na onderhandeling of via een{" "}
+            <Term id="kredietmakelaar" /> kom je meestal ergens tussen de
+            marktrente en de tarieflijst uit.
+          </p>
+        </div>
+      </details>
     </div>
   );
 }
 
-/** How old the NBB figure is today, when the next one arrives, and how we estimate today's rate. */
+/** How old the NBB figure is today and when the next one arrives. */
 function FreshnessNote({
   month,
   today,
-  forecast,
-  yieldsUntil,
 }: {
   month: string;
   today: Date | null;
-  forecast?: RateForecast;
-  yieldsUntil?: string;
 }) {
   const status = today ? releaseStatus(month, today) : undefined;
 
@@ -163,29 +194,13 @@ function FreshnessNote({
   }
 
   return (
-    <div className="grid gap-1.5 rounded-md bg-amber-500/10 px-3 py-2 text-amber-900 ring-1 ring-amber-500/25 dark:text-amber-200">
+    <div className="grid gap-2 rounded-md bg-amber-500/10 px-3 py-2.5 text-amber-900 ring-1 ring-amber-500/25 dark:text-amber-200">
       <p>
         <span className="font-semibold">Let op:</span> de marktrente is het
         cijfer van {monthLabel(month)}
         {age}. De <Term id="nbb" /> publiceert pas zo&apos;n 5 weken na het
-        einde van de maand. {next} Het is ook een gemiddelde over alle kopers,
-        en veel van die leningen hebben de rente van een offerte van enkele
-        maanden eerder. Een offerte die je vandaag krijgt, ligt daarom vaak
-        hoger, zeker als je meer dan 90 % leent.
+        einde van de maand. {next}
       </p>
-      {forecast && (
-        <p>
-          <span className="font-semibold">Verwachte rente nu</span> (
-          {pct(forecast.ratePercent)} voor {monthLabel(forecast.month)}): onze
-          schatting van wat de NBB voor deze maand zal publiceren. We nemen de
-          rente van {monthLabel(forecast.fromMonth)} en tellen erbij op hoeveel
-          de Europese 10-jaarsrente sindsdien bewoog; hypotheekrentes volgen die
-          met zo&apos;n twee maanden vertraging.
-          {yieldsUntil &&
-            ` Gebaseerd op beursdata tot ${dayLabel(yieldsUntil)}.`}{" "}
-          Het blijft een gemiddelde, geen offerte.
-        </p>
-      )}
       <p>
         Heb je al een offerte? Vul die rente in bij{" "}
         <span className="font-medium">Jaarlijkse rentevoet</span>.

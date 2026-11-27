@@ -245,10 +245,17 @@ makkelijk te testen en overal herbruikbaar.
 
 ### Onderhoud
 
-- **Banktarieven** veranderen om de paar weken: werk de tabel en `RATES_CHECKED_ON` bij in
-  [`rates.ts`](src/lib/sim/rates.ts). KBC, ING en vdk publiceren geen tarieflijst.
-- **Notaris- en registratietarieven** staan in [`tariffs.ts`](src/lib/sim/tariffs.ts), met bron en
-  `TARIFFS_CHECKED_ON`. Controleer ze minstens elk jaar in januari (indexering).
+- **Banktarieven** leest de site elk uur zelf uit de tarieflijsten (PDF) van de banken, in
+  [`get-bank-tariffs.ts`](src/lib/market/get-bank-tariffs.ts). Lukt dat niet voor een bank (andere
+  opmaak, site onbereikbaar), dan gebruikt ze voor die bank de waarden in
+  [`rates.ts`](src/lib/sim/rates.ts) en toont de footer welke bank. KBC, ING en vdk publiceren geen
+  tarieflijst.
+- **Notaris- en registratietarieven** staan in [`tariffs.ts`](src/lib/sim/tariffs.ts). De site
+  controleert elke dag in [`tariff-checks.ts`](src/lib/market/tariff-checks.ts) of de officiële
+  bronnen (Vlaanderen, Wallonië, Brussel, notaris.be) nog dezelfde cijfers vermelden. Wijkt een bron
+  af, dan toont de footer „Mogelijk gewijzigd" met de naam van de bron. Dat gebeurt zeker elk jaar
+  in januari: dan moeten de geïndexeerde notarisbarema’s en de link naar het nieuwe tariefbesluit
+  bijgewerkt worden.
 - **Leefgeld-minimums** in [`situation.ts`](src/lib/sim/situation.ts) zijn schattingen; banken
   hanteren eigen normen.
 - **Nog niet gemodelleerd:** variabele rentes en hun wettelijke plafonds, het JKP, de Vlaamse

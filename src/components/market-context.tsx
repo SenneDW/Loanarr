@@ -7,7 +7,10 @@ import {
   useSyncExternalStore,
 } from "react";
 import type { RateForecast } from "@/lib/market/forecast";
+import type { LiveBankTariffs } from "@/lib/market/get-bank-tariffs";
+import type { TariffChecks } from "@/lib/market/get-tariff-checks";
 import { monthOf } from "@/lib/market/release";
+import { BANK_TARIFFS, RATES_CHECKED_ON } from "@/lib/sim/rates";
 import { useAffordabilityStore } from "@/stores/affordability-store";
 import { SNAPSHOT_MARKET_RATE } from "@/stores/create-rate-store";
 import { useLoanStore } from "@/stores/loan-store";
@@ -23,13 +26,39 @@ export interface MarketSummary {
   yieldsUntil?: string;
   fetchedAt: string;
   source: "live" | "snapshot";
+  /** Bank tariffs, read live from the banks' sheets (bundled ones as fallback). */
+  banks: LiveBankTariffs;
+  /** Daily check of the registration duties and notary fees against their sources. */
+  tariffChecks: TariffChecks;
 }
+
+/** Before (or without) a check: the 2027 rate counts as announced, as in tariffs.ts. */
+export const UNCHECKED_TARIFFS: TariffChecks = {
+  sources: [],
+  flanders2027: "announced",
+  checkedAt: "",
+};
+
+/** Bundled bank tariffs, until (or when) the live ones are not available. */
+export const BUNDLED_BANKS: LiveBankTariffs = {
+  tariffs: [...BANK_TARIFFS],
+  status: BANK_TARIFFS.map((t) => ({
+    id: t.id,
+    bank: t.bank,
+    live: false,
+    validFrom: t.validFrom,
+    url: t.url,
+  })),
+  checkedAt: `${RATES_CHECKED_ON}T12:00:00Z`,
+};
 
 const MarketContext = createContext<MarketSummary>({
   negotiatedFixed: { ratePercent: SNAPSHOT_MARKET_RATE, month: "" },
   forecasts: [],
   fetchedAt: "",
   source: "snapshot",
+  banks: BUNDLED_BANKS,
+  tariffChecks: UNCHECKED_TARIFFS,
 });
 
 const noSubscribe = () => () => {};
@@ -85,9 +114,22 @@ export function MarketProvider({
     }
   }, [forecast]);
 
+  const tariffs = value.banks.tariffs;
+  useEffect(() => {
+    useAffordabilityStore.getState().setBankTariffs(tariffs);
+    useLoanStore.getState().setBankTariffs(tariffs);
+  }, [tariffs]);
+
   return (
     <MarketContext.Provider value={value}>{children}</MarketContext.Provider>
   );
 }
 
 export const useMarket = () => useContext(MarketContext);
+
+/**
+ * True once the Flemish page states plainly that 3 % applies from 2027; until
+ * then the app calls that rate "aangekondigd".
+ */
+export const useFlanders2027Enacted = () =>
+  useContext(MarketContext).tariffChecks.flanders2027 === "enacted";

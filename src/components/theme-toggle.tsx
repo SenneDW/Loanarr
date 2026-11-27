@@ -14,11 +14,15 @@ import {
   CUSTOM_PALETTE,
   DEFAULT_CUSTOM_HUE,
   DEFAULT_PALETTE,
+  DEFAULT_TONE,
   MODE_KEY,
   PALETTE_KEY,
   type PaletteId,
   palettes,
   swatch,
+  TONE_KEY,
+  type Tone,
+  tones,
 } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +35,20 @@ const modes: ReadonlyArray<{
   { id: "dark", label: "Donker", Icon: Moon },
   { id: "system", label: "Systeem", Icon: Monitor },
 ];
+
+/** Little dots that preview each tone's background (neutral, like globals.css). */
+const TONE_SWATCH: Record<"light" | "dark", Record<Tone, string>> = {
+  light: {
+    deep: "oklch(1 0 0)",
+    default: "oklch(0.985 0 0)",
+    soft: "oklch(0.94 0 0)",
+  },
+  dark: {
+    deep: "oklch(0.11 0 0)",
+    default: "oklch(0.16 0 0)",
+    soft: "oklch(0.25 0 0)",
+  },
+};
 
 const read = (key: string): string | null => {
   try {
@@ -53,38 +71,50 @@ export function ThemeToggle() {
   const [palette, setPalette] = useState<PaletteId>(DEFAULT_PALETTE);
   const [mode, setMode] = useState<ColorMode>("system");
   const [customHue, setCustomHue] = useState(DEFAULT_CUSTOM_HUE);
+  const [tone, setTone] = useState<Tone>(DEFAULT_TONE);
+  // Whether dark mode is active right now, so the tone labels fit (e.g. "Zwart").
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     setPalette((read(PALETTE_KEY) as PaletteId | null) ?? DEFAULT_PALETTE);
     setMode((read(MODE_KEY) as ColorMode | null) ?? "system");
     setCustomHue(Number(read(CUSTOM_HUE_KEY)) || DEFAULT_CUSTOM_HUE);
+    const saved = read(TONE_KEY);
+    setTone(saved === "deep" || saved === "soft" ? saved : DEFAULT_TONE);
+    setIsDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   // Follow the OS setting while in "system" mode.
   useEffect(() => {
     if (mode !== "system") return;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => applyTheme(palette, "system", customHue);
+    const onChange = () =>
+      setIsDark(applyTheme(palette, "system", customHue, tone));
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
-  }, [mode, palette, customHue]);
+  }, [mode, palette, customHue, tone]);
 
   const choosePalette = (p: PaletteId) => {
     setPalette(p);
     save(PALETTE_KEY, p);
-    applyTheme(p, mode, customHue);
+    applyTheme(p, mode, customHue, tone);
   };
   const chooseMode = (m: ColorMode) => {
     setMode(m);
     save(MODE_KEY, m);
-    applyTheme(palette, m, customHue);
+    setIsDark(applyTheme(palette, m, customHue, tone));
+  };
+  const chooseTone = (t: Tone) => {
+    setTone(t);
+    save(TONE_KEY, t);
+    applyTheme(palette, mode, customHue, t);
   };
   const chooseHue = (h: number) => {
     setCustomHue(h);
     setPalette(CUSTOM_PALETTE);
     save(CUSTOM_HUE_KEY, String(h));
     save(PALETTE_KEY, CUSTOM_PALETTE);
-    applyTheme(CUSTOM_PALETTE, mode, h);
+    applyTheme(CUSTOM_PALETTE, mode, h, tone);
   };
 
   const active = palettes.find((p) => p.id === palette);
@@ -99,7 +129,7 @@ export function ThemeToggle() {
       >
         <Palette className="size-4.5" aria-hidden />
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-80 gap-4 p-4">
+      <PopoverContent align="end" className="w-[min(92vw,22rem)] gap-4 p-4">
         <div className="grid gap-2">
           <span className="text-xs font-medium text-muted-foreground">
             Weergave
@@ -112,7 +142,7 @@ export function ThemeToggle() {
                 onClick={() => chooseMode(id)}
                 aria-pressed={mode === id}
                 className={cn(
-                  "flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-medium transition-colors",
+                  "flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 whitespace-nowrap text-xs font-medium transition-colors",
                   mode === id
                     ? "bg-background text-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -120,6 +150,37 @@ export function ThemeToggle() {
               >
                 <Icon className="size-3.5" aria-hidden />
                 {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-2">
+          <span className="text-xs font-medium text-muted-foreground">
+            Achtergrond
+          </span>
+          <div className="grid grid-cols-3 gap-1 rounded-lg bg-muted p-1">
+            {tones.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => chooseTone(t.id)}
+                aria-pressed={tone === t.id}
+                className={cn(
+                  "flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 whitespace-nowrap text-xs font-medium transition-colors",
+                  tone === t.id
+                    ? "bg-background text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <span
+                  aria-hidden
+                  className="size-3 shrink-0 rounded-full ring-1 ring-foreground/25"
+                  style={{
+                    background: TONE_SWATCH[isDark ? "dark" : "light"][t.id],
+                  }}
+                />
+                {isDark ? t.dark : t.light}
               </button>
             ))}
           </div>

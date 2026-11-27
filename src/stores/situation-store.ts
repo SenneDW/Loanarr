@@ -19,7 +19,8 @@ export const emptySituation: Situation = {
   gift: 0,
   rent: 0,
   otherCredits: 0,
-  bufferMonths: 6,
+  // Undefined: our estimate, until the user types their own amount.
+  buffer: undefined,
 };
 
 /** Kept in memory only: financial details never leave the browser tab. */

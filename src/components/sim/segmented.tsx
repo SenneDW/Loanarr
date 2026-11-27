@@ -21,7 +21,7 @@ export function Segmented<T extends string | number>({
   hint,
 }: SegmentedProps<T>) {
   return (
-    <div className="grid gap-2">
+    <div className="grid min-w-0 content-start gap-2">
       <div className="flex items-center gap-1">
         <span className="text-sm font-medium">{label}</span>
         {info}
@@ -33,9 +33,14 @@ export function Segmented<T extends string | number>({
           if (match) onChange(match.value);
         }}
       >
-        <TabsList className="w-full">
+        {/* Long labels wrap instead of overflowing narrow columns. */}
+        <TabsList className="min-h-8 w-full items-stretch group-data-horizontal/tabs:h-auto">
           {options.map((o) => (
-            <TabsTrigger key={String(o.value)} value={String(o.value)}>
+            <TabsTrigger
+              key={String(o.value)}
+              value={String(o.value)}
+              className="h-auto min-w-0 basis-0 py-1 leading-tight whitespace-normal"
+            >
               {o.label}
             </TabsTrigger>
           ))}

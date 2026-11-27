@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useMarket } from "@/components/market-context";
 import {
   Card,
   CardContent,
@@ -14,14 +15,15 @@ import {
   affordabilityInputSchema,
   maxPurchasePrice,
 } from "@/lib/sim/affordability";
-import { bankRatesFor, RATES_CHECKED_ON } from "@/lib/sim/rates";
+import { bankRatesFor } from "@/lib/sim/rates";
 
 /** What each bank's published rate would mean for the user's maximum price. */
 export function BankComparison({ input }: { input: AffordabilityInput }) {
+  const { banks } = useMarket();
   const rows = useMemo(() => {
     const parsed = affordabilityInputSchema.safeParse(input);
     if (!parsed.success) return [];
-    return bankRatesFor(input.years)
+    return bankRatesFor(input.years, banks.tariffs)
       .map((r) => {
         const result = maxPurchasePrice({
           ...parsed.data,
@@ -30,7 +32,7 @@ export function BankComparison({ input }: { input: AffordabilityInput }) {
         return { ...r, maxPrice: result.maxPrice, loan: result.plan.loan };
       })
       .sort((a, b) => b.maxPrice - a.maxPrice);
-  }, [input]);
+  }, [input, banks.tariffs]);
 
   if (rows.length === 0) return null;
   const best = rows[0].maxPrice;
@@ -43,7 +45,7 @@ export function BankComparison({ input }: { input: AffordabilityInput }) {
         <CardDescription>
           Vaste rente voor {input.years} jaar met verzekeringen bij de bank, uit
           hun tarieflijsten (
-          {new Date(RATES_CHECKED_ON).toLocaleDateString("nl-BE")}). Zelfde
+          {new Date(banks.checkedAt).toLocaleDateString("nl-BE")}). Zelfde
           maandlast en eigen middelen.
         </CardDescription>
       </CardHeader>

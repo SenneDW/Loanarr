@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useMarket } from "@/components/market-context";
+import { useFlanders2027Enacted, useMarket } from "@/components/market-context";
 import {
   formatEur,
   formatEurRounded,
@@ -10,7 +10,7 @@ import {
 } from "@/lib/format";
 import { creditCosts, registrationDuty } from "@/lib/sim/costs";
 import { simulateLoan } from "@/lib/sim/loan";
-import { bankRatesFor, RATES_CHECKED_ON } from "@/lib/sim/rates";
+import { bankRatesFor } from "@/lib/sim/rates";
 
 const EXAMPLE_LOAN = 200_000;
 const delay = (seconds: number) =>
@@ -175,15 +175,21 @@ function Legend() {
 /* ------------------------------------------------------------------ */
 
 export function RateInfo({ years }: { years: number }) {
-  const { negotiatedFixed } = useMarket();
-  const rates = Number.isFinite(years) ? bankRatesFor(years) : [];
+  const { negotiatedFixed, banks } = useMarket();
+  const rates = Number.isFinite(years)
+    ? bankRatesFor(years, banks.tariffs)
+    : [];
   return (
     <>
       <p>
         De rentevoet bepaalt hoeveel je lening kost. Hier zie je de{" "}
         <strong>vaste rente voor {years} jaar</strong> uit de officiële
         tarieflijsten van banken (gecontroleerd op{" "}
-        {dateNl(RATES_CHECKED_ON, { day: "numeric", month: "long" })}).
+        {dateNl(banks.checkedAt.slice(0, 10), {
+          day: "numeric",
+          month: "long",
+        })}
+        ).
       </p>
       {rates.length > 0 && (
         <table className="w-full text-xs tabular-nums">
@@ -473,11 +479,14 @@ function LtvDiagram() {
 /* ------------------------------------------------------------------ */
 
 export function RegionInfo() {
+  const enacted2027 = useFlanders2027Enacted();
   const price = 300_000;
   const rows = [
     {
       region: "Vlaanderen",
-      rule: "2 % (3 % vanaf 2027 aangekondigd)",
+      rule: enacted2027
+        ? "2 % (3 % vanaf 2027)"
+        : "2 % (3 % vanaf 2027 aangekondigd)",
       duty: registrationDuty(price, "flanders", 2026),
     },
     {

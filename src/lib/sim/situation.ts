@@ -41,17 +41,30 @@ export const situationSchema = z.object({
   rent: euro("Vul je huidige huur in."),
   /** Monthly payments on other loans (car, personal loan). */
   otherCredits: euro("Vul je andere kredieten in."),
-  /** Months of living costs to keep as an emergency buffer. */
-  bufferMonths: z.number().int().min(0).max(24),
+  /**
+   * Savings to keep aside as an emergency buffer, in EUR.
+   * Undefined: use our estimate ({@link ESTIMATE_BUFFER_MONTHS} months of costs).
+   */
+  buffer: euro("Vul je buffer in.").optional(),
 });
 
 export type Situation = z.infer<typeof situationSchema>;
 
+/** Months of monthly costs we suggest keeping aside when the user sets no buffer. */
+export const ESTIMATE_BUFFER_MONTHS = 6;
+
 export interface SituationSummary {
   totalIncome: number;
   livingMinimum: number;
+  /**
+   * What a month costs once you own the home: living money, the comfortable
+   * loan payment and other loans. The basis for our buffer estimate.
+   */
+  monthlyCosts: number;
   /** Savings kept aside as an emergency buffer. */
   buffer: number;
+  /** True when {@link buffer} is our estimate, not an amount the user typed. */
+  bufferIsEstimate: boolean;
   /** All money that could go into the purchase (savings + investments + gift). */
   totalAssets: number;
   /** What we suggest putting into the purchase: assets minus the buffer. */
@@ -72,11 +85,15 @@ export function livingMinimum(s: Pick<Situation, "household" | "children">) {
   );
 }
 
+/** A buffer of `months` months of costs, rounded to €100. */
+export function estimateBuffer(monthlyCosts: number, months: number) {
+  return Math.round((monthlyCosts * months) / 100) * 100;
+}
+
 export function summarizeSituation(raw: Situation): SituationSummary {
   const s = situationSchema.parse(raw);
   const totalIncome = s.income1 + (s.household === "couple" ? s.income2 : 0);
   const living = livingMinimum(s);
-  const buffer = s.bufferMonths * living;
   const totalAssets =
     s.savings + (s.useInvestments ? s.investments : 0) + s.gift;
 
@@ -88,10 +105,19 @@ export function summarizeSituation(raw: Situation): SituationSummary {
     maxPayment,
   );
 
+  // Once you own the home, the loan payment is part of what a month costs:
+  // a buffer that ignores it runs out fast.
+  const monthlyCosts = living + comfortablePayment + s.otherCredits;
+  const bufferIsEstimate = s.buffer === undefined;
+  const buffer =
+    s.buffer ?? estimateBuffer(monthlyCosts, ESTIMATE_BUFFER_MONTHS);
+
   return {
     totalIncome,
     livingMinimum: living,
+    monthlyCosts,
     buffer,
+    bufferIsEstimate,
     totalAssets,
     suggestedOwnFunds: floorTo(totalAssets - buffer, 500),
     comfortablePayment,
@@ -195,7 +221,9 @@ export function readinessChecks(
     detail:
       s.buffer === 0
         ? "Je koos geen buffer. Hou toch wat opzij voor verhuis en onverwachte kosten."
-        : `Je wil ${eur(s.buffer)} achter de hand houden (${situation.bufferMonths} maanden leefgeld).`,
+        : s.bufferIsEstimate
+          ? `Hou best ±${eur(s.buffer)} achter de hand: ${ESTIMATE_BUFFER_MONTHS} maanden aan leefgeld en maandlasten (schatting).`
+          : `Je wil ${eur(s.buffer)} achter de hand houden.`,
   });
 
   // 5. Step up from the current rent.
