@@ -12,12 +12,10 @@
   Gratis · zonder account · zonder e-mailadres · je gegevens blijven in je browser
 </p>
 
+https://github.com/user-attachments/assets/f8deda52-d940-42e7-a8c0-9e5e9203658a
+
 <p align="center">
-  <a href="https://loanarr.sennedewever.be">
-    <img src="docs/loanarr-film.gif" alt="Loanarr in 35 seconden: de vijf stappen van situatie tot resultaat, en je aflossingstabel." width="100%">
-  </a>
-  <br>
-  <sub>Loanarr in 35 seconden: van je situatie tot je aflossingstabel. <a href="docs/loanarr-film.mp4">▶ Bekijk de film met geluid (HD)</a></sub>
+  <sub>🔊 Zet je geluid aan: Loanarr in 36 seconden, van je situatie tot je aflossingstabel.</sub>
 </p>
 
 ---
