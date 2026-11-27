@@ -2,11 +2,12 @@ import { typicalFixedRate } from "@/lib/sim/rates";
 
 /**
  * Where the interest rate comes from:
- * - "market": live NBB/ECB rate that buyers actually pay (fixed > 10 years). Default.
- * - "banks":  average published bank tariff for the chosen duration (before negotiation).
- * - "custom": the user typed their own rate.
+ * - "market":   latest published NBB/ECB rate that buyers actually pay (fixed > 10 years). Default.
+ * - "forecast": our estimate of that rate for today, before the NBB publishes it.
+ * - "banks":    average published bank tariff for the chosen duration (before negotiation).
+ * - "custom":   the user typed their own rate.
  */
-export type RateMode = "market" | "banks" | "custom";
+export type RateMode = "market" | "forecast" | "banks" | "custom";
 
 interface WithRate {
   annualRatePercent: number;
@@ -17,10 +18,11 @@ export function rateFor(
   mode: Exclude<RateMode, "custom">,
   years: number,
   marketRate: number,
+  forecastRate?: number,
 ): number {
-  return mode === "market"
-    ? marketRate
-    : typicalFixedRate(Number.isFinite(years) ? years : 25).ratePercent;
+  if (mode === "market") return marketRate;
+  if (mode === "forecast") return forecastRate ?? marketRate;
+  return typicalFixedRate(Number.isFinite(years) ? years : 25).ratePercent;
 }
 
 /**
@@ -32,13 +34,19 @@ export function applyRatePatch<T extends WithRate>(
   mode: RateMode,
   marketRate: number,
   patch: Partial<T>,
+  forecastRate?: number,
 ): { input: T; mode: RateMode } {
   const next = { ...input, ...patch };
   if (patch.annualRatePercent !== undefined) {
     return { input: next, mode: "custom" };
   }
   if (mode !== "custom" && patch.years !== undefined) {
-    next.annualRatePercent = rateFor(mode, next.years, marketRate);
+    next.annualRatePercent = rateFor(
+      mode,
+      next.years,
+      marketRate,
+      forecastRate,
+    );
   }
   return { input: next, mode };
 }

@@ -20,7 +20,7 @@ export const glossary = {
   marktrente: {
     term: "Marktrente",
     short:
-      "De gemiddelde rente die kopers in België écht betalen op nieuwe woonleningen, na onderhandeling. Gepubliceerd door de Nationale Bank.",
+      "De gemiddelde rente die kopers in België écht betalen op nieuwe woonleningen, na onderhandeling. Gepubliceerd door de Nationale Bank, met ongeveer twee maanden vertraging. Een offerte van vandaag ligt vaak hoger.",
   },
   tarieflijst: {
     term: "Tarieflijst",

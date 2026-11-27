@@ -32,6 +32,14 @@ export const formatEurRounded = (value: number) => eurRounded.format(value);
 export const formatPercent = (fraction: number, decimals = 1) =>
   percentFormat(decimals).format(fraction);
 
+/** "2026-09" + 3 → "2026-12". */
+export const addMonths = (month: string, n: number) => {
+  const [y, m] = month.split("-").map(Number);
+  if (!y || !m) return month;
+  const d = new Date(Date.UTC(y, m - 1 + n, 1));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+};
+
 /** "2026-09" → "september 2026" (or "sep. 2026" when short). */
 export const monthLabel = (month: string, short = false) => {
   const [y, m] = month.split("-").map(Number);

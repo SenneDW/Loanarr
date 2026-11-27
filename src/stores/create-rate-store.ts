@@ -12,10 +12,14 @@ export interface RateStore<T extends WithRate> {
   rateMode: RateMode;
   /** Latest live market rate (NBB/ECB, fixed > 10 years). */
   marketRate: number;
+  /** Estimated market rate for today (undefined until it has loaded). */
+  forecastRate?: number;
   setInput: (patch: Partial<T>) => void;
   setRateMode: (mode: Exclude<RateMode, "custom">) => void;
   /** Called once the live market data has loaded. */
   setMarketRate: (rate: number) => void;
+  /** Called once today's estimate is known. */
+  setForecastRate: (rate: number) => void;
   reset: () => void;
 }
 
@@ -34,9 +38,16 @@ export function createRateStore<T extends WithRate>(
     input: initial(SNAPSHOT_MARKET_RATE),
     rateMode: "market",
     marketRate: SNAPSHOT_MARKET_RATE,
+    forecastRate: undefined,
     setInput: (patch) =>
       set((s) => {
-        const next = applyRatePatch(s.input, s.rateMode, s.marketRate, patch);
+        const next = applyRatePatch(
+          s.input,
+          s.rateMode,
+          s.marketRate,
+          patch,
+          s.forecastRate,
+        );
         return { input: next.input, rateMode: next.mode };
       }),
     setRateMode: (mode) =>
@@ -44,7 +55,12 @@ export function createRateStore<T extends WithRate>(
         rateMode: mode,
         input: {
           ...s.input,
-          annualRatePercent: rateFor(mode, s.input.years, s.marketRate),
+          annualRatePercent: rateFor(
+            mode,
+            s.input.years,
+            s.marketRate,
+            s.forecastRate,
+          ),
         },
       })),
     setMarketRate: (rate) =>
@@ -55,6 +71,15 @@ export function createRateStore<T extends WithRate>(
               input: { ...s.input, annualRatePercent: rate },
             }
           : { marketRate: rate },
+      ),
+    setForecastRate: (rate) =>
+      set((s) =>
+        s.rateMode === "forecast"
+          ? {
+              forecastRate: rate,
+              input: { ...s.input, annualRatePercent: rate },
+            }
+          : { forecastRate: rate },
       ),
     reset: () =>
       set((s) => ({

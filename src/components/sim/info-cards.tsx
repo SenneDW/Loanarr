@@ -228,8 +228,10 @@ export function RateInfo({ years }: { years: number }) {
           <strong className="text-foreground">Onderhandelen loont:</strong> na
           onderhandeling betaalden kopers gemiddeld{" "}
           {formatPercent(negotiatedFixed.ratePercent / 100, 2)} (NBB,{" "}
-          {monthLabel(negotiatedFixed.month)}). Vraag dus altijd offertes bij
-          meerdere banken.
+          {monthLabel(negotiatedFixed.month)}, het meest recente cijfer: de NBB
+          publiceert met zo&apos;n twee maanden vertraging). Een offerte van
+          vandaag ligt vaak hoger. Vraag dus altijd offertes bij meerdere
+          banken.
         </li>
         <li>
           Een goed EPC-label geeft vaak nog 0,10–0,20 % korting. KBC, ING en vdk
