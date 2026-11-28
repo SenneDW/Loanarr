@@ -38,7 +38,7 @@ export function SiteNav() {
           className="flex items-center gap-2 font-semibold tracking-tight"
         >
           <LogoMark className="size-7" />
-          Loanarr
+          Hypotheur
         </Link>
 
         {/* Desktop and tablet: links inline. */}

@@ -83,7 +83,7 @@ export async function SiteFooter() {
         <div className="grid h-fit gap-2">
           <div className="flex items-center gap-2 font-semibold">
             <LogoMark className="size-7" />
-            Loanarr
+            Hypotheur
           </div>
           <p className="text-xs text-muted-foreground">
             Simulaties zijn louter indicatief en geen kredietaanbod. Je bank

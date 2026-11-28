@@ -34,10 +34,10 @@ export const tones: ReadonlyArray<{
 ];
 export const DEFAULT_TONE: Tone = "default";
 
-export const PALETTE_KEY = "loanarr:palette";
-export const MODE_KEY = "loanarr:mode";
-export const TONE_KEY = "loanarr:tone";
-export const CUSTOM_HUE_KEY = "loanarr:custom-hue";
+export const PALETTE_KEY = "hypotheur:palette";
+export const MODE_KEY = "hypotheur:mode";
+export const TONE_KEY = "hypotheur:tone";
+export const CUSTOM_HUE_KEY = "hypotheur:custom-hue";
 export const DEFAULT_PALETTE: PaletteId = "smaragd";
 export const DEFAULT_CUSTOM_HUE = 200;
 

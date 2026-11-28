@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { glossary } from "@/lib/glossary";
 import { socialMetadata } from "@/lib/site";
 
-const title = "Begrippen – Loanarr";
+const title = "Begrippen – Hypotheur";
 const description =
   "Moeilijke woorden rond woonkrediet en de aankoop van je eerste woning, in gewone taal uitgelegd.";
 

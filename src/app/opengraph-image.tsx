@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Loanarr: bereken hoeveel je eerste woning in België mag kosten, met alle kosten erbij.";
+  "Hypotheur: bereken hoeveel je eerste woning in België mag kosten, met alle kosten erbij.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -66,7 +66,7 @@ export default function Image() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
           <LogoMark px={64} />
-          <div style={{ fontSize: 40, fontWeight: 700 }}>Loanarr</div>
+          <div style={{ fontSize: 40, fontWeight: 700 }}>Hypotheur</div>
         </div>
         <div
           style={{
@@ -201,7 +201,7 @@ export default function Image() {
           opacity: 0.85,
         }}
       >
-        loanarr.sennedewever.be
+        hypotheur.sennedewever.be
       </div>
     </div>,
     size,

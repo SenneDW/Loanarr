@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LoanSimulator } from "@/components/sim/loan-simulator";
 import { socialMetadata } from "@/lib/site";
 
-const title = "Aflossingstabel – Loanarr";
+const title = "Aflossingstabel – Hypotheur";
 const description =
   "Vul je leenbedrag, rente en looptijd in en zie je maandlast, met per jaar hoeveel kapitaal en interest je aan de bank terugbetaalt.";
 

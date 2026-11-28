@@ -1,11 +1,11 @@
-/** Loanarr logo mark: a house with rising bars. Same artwork as /logos/loanarr-a-house-bars.svg. */
+/** Hypotheur logo mark: a house with rising bars. Same artwork as /logos/hypotheur-a-house-bars.svg. */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 64 64"
       className={className}
       role="img"
-      aria-label="Loanarr"
+      aria-label="Hypotheur"
     >
       <rect width="64" height="64" rx="14" fill="var(--primary)" />
       <path

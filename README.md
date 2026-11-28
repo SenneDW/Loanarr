@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="docs/hero.svg" alt="Loanarr: weet wat je kan kopen. Je eerste woning in België, tot op de cent berekend." width="100%">
+  <img src="docs/hero.svg" alt="Hypotheur: weet wat je kan kopen. Je eerste woning in België, tot op de cent berekend." width="100%">
 </p>
 
 <h3 align="center">Je eerste huis kopen? Weet eindelijk wat je écht kan betalen. 🏡</h3>
 
 <p align="center">
-  <a href="https://loanarr.sennedewever.be"><b>👉 Probeer Loanarr gratis op loanarr.sennedewever.be</b></a>
+  <a href="https://hypotheur.sennedewever.be"><b>👉 Probeer Hypotheur gratis op hypotheur.sennedewever.be</b></a>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 https://github.com/user-attachments/assets/f8deda52-d940-42e7-a8c0-9e5e9203658a
 
 <p align="center">
-  <sub>🔊 Zet je geluid aan: Loanarr in 36 seconden, van je situatie tot je aflossingstabel.</sub>
+  <sub>🔊 Zet je geluid aan: Hypotheur in 36 seconden, van je situatie tot je aflossingstabel.</sub>
 </p>
 
 ---
@@ -30,12 +30,12 @@ niet weet! En dan blijkt het bedrag dat eruit komt ook nog eens zonder registrat
 zonder notariskosten en zonder kredietakte te zijn. Op de bank volgt de koude douche:
 *"Ah, en dan nog € 20.000 aan kosten, hé."*
 
-**Dat kan beter. Daarom is er Loanarr.**
+**Dat kan beter. Daarom is er Hypotheur.**
 
-## Maak kennis met Loanarr ✨
+## Maak kennis met Hypotheur ✨
 
-Loanarr draait de vraag om. Je vertelt wat je **verdient** en wat je **gespaard** hebt, en
-Loanarr rekent uit hoeveel je woning mag kosten. Alles erin: de notaris, de registratierechten
+Hypotheur draait de vraag om. Je vertelt wat je **verdient** en wat je **gespaard** hebt, en
+Hypotheur rekent uit hoeveel je woning mag kosten. Alles erin: de notaris, de registratierechten
 van jouw gewest, de kosten van je lening en de rente die Belgische kopers vandaag écht betalen.
 
 Geen giswerk meer. Je stapt het kantoor van je bank of makelaar binnen met een plan dat klopt
@@ -46,18 +46,18 @@ tot op de cent. 💪
 | | |
 |---|---|
 | **1. Vertel wie je bent** | Alleen of met twee? Wat verdien je, wat staat er op je spaarrekening, krijg je hulp van je ouders? |
-| **2. Kies je budget** | Loanarr stelt een *comfortabele* en een *maximale* maandlast voor. Jij kiest. |
+| **2. Kies je budget** | Hypotheur stelt een *comfortabele* en een *maximale* maandlast voor. Jij kiest. |
 | **3. Zie wat je kan kopen** | Je maximale aankoopprijs, het volledige financieel plan, en wat het je over 25 jaar echt kost. |
 
 En dat allemaal live: verschuif een slider en alles rekent meteen opnieuw.
 
 ---
 
-## Waarom je Loanarr gaat liefhebben ❤️
+## Waarom je Hypotheur gaat liefhebben ❤️
 
 ### 🎯 Een budget dat bij jóu past, niet bij de bank
 
-Banken kijken vooral naar wat ze maximaal mogen lenen. Loanarr kijkt ook naar wat comfortabel
+Banken kijken vooral naar wat ze maximaal mogen lenen. Hypotheur kijkt ook naar wat comfortabel
 is. Je krijgt twee scenario's naast elkaar, en een buffer voor onverwachte kosten blijft
 gewoon op je spaarrekening staan. Want een nieuwe ketel in je eerste winter? Die komt sneller
 dan je denkt.
@@ -74,7 +74,7 @@ zo leuk (en zo leerrijk).
 
 ### ✅ Ben je er klaar voor? Eerlijk antwoord.
 
-Loanarr zegt het je recht in je gezicht, maar wel vriendelijk. 🙂 Volstaat je eigen inbreng?
+Hypotheur zegt het je recht in je gezicht, maar wel vriendelijk. 🙂 Volstaat je eigen inbreng?
 Blijft je schuldratio onder een derde? Hou je genoeg leefgeld over? Groen, oranje of rood, met
 uitleg over wat je kan doen.
 
@@ -90,7 +90,7 @@ maar beter nu dan later.
 
 ### 🔑 Kopen of huren? Eindelijk een antwoord.
 
-De eeuwige discussie op familiefeesten, nu met cijfers. Loanarr vergelijkt je vermogen bij
+De eeuwige discussie op familiefeesten, nu met cijfers. Hypotheur vergelijkt je vermogen bij
 kopen met blijven huren en je eigen inbreng beleggen, over 10, 15 of 25 jaar. Inclusief het
 *omslagpunt*: vanaf wanneer kopen de betere keuze wordt.
 
@@ -98,7 +98,7 @@ kopen met blijven huren en je eigen inbreng beleggen, over 10, 15 of 25 jaar. In
 
 ### 🇧🇪 Gemaakt voor België, tot in het kleinste detail
 
-Geen Nederlandse of Amerikaanse rekensom met een Belgisch sausje. Loanarr kent de regels:
+Geen Nederlandse of Amerikaanse rekensom met een Belgisch sausje. Hypotheur kent de regels:
 registratierechten per gewest, het wettelijke notarisbarema, inschrijving of mandaat, de
 Belgische manier om de maandrente te berekenen. Je krijgt een financieel plan zoals bij een
 kredietmakelaar, en uitgaven en financiering kloppen tot op de cent.
@@ -107,7 +107,7 @@ kredietmakelaar, en uitgaven en financiering kloppen tot op de cent.
 
 ### 🏦 Wat geven de banken vandaag?
 
-Loanarr legt de tarieflijsten van Argenta, Belfius, Crelan, BNP Paribas Fortis en Elantis naast
+Hypotheur legt de tarieflijsten van Argenta, Belfius, Crelan, BNP Paribas Fortis en Elantis naast
 elkaar en toont per bank wat dat voor jouw aankoopbudget betekent. Het verschil loopt al snel
 op tot tienduizenden euro's. Handig om mee te nemen naar je volgende afspraak. 😉
 
@@ -115,7 +115,7 @@ op tot tienduizenden euro's. Handig om mee te nemen naar je volgende afspraak. �
 
 ### 📈 De rente van vandaag, live
 
-Loanarr rekent standaard met de rente die Belgische kopers effectief betalen, rechtstreeks van
+Hypotheur rekent standaard met de rente die Belgische kopers effectief betalen, rechtstreeks van
 de Nationale Bank. Met een grafiek van twintig jaar zie je meteen of de rente stijgt of daalt.
 Nieuwe cijfers verschijnen vanzelf.
 
@@ -124,7 +124,7 @@ Nieuwe cijfers verschijnen vanzelf.
 ### 🧠 Nooit meer "euh, wat is een quotiteit?"
 
 Elk moeilijk woord heeft een stippellijn: beweeg erover en je krijgt uitleg in gewone taal.
-Quotiteit, mandaat, JKP, schuldratio, omslagpunt... Na Loanarr praat je mee met je bankier.
+Quotiteit, mandaat, JKP, schuldratio, omslagpunt... Na Hypotheur praat je mee met je bankier.
 
 ### 🎨 Mooi op elk scherm
 
@@ -132,48 +132,48 @@ Werkt even vlot op je gsm als op je laptop. Licht of donker, twaalf kleurthema's
 gewoon je eigen kleur.
 
 <p align="center">
-  <img src="docs/screenshots/10-donker-oceaan.jpg" alt="Loanarr in donkere modus" width="62%">
+  <img src="docs/screenshots/10-donker-oceaan.jpg" alt="Hypotheur in donkere modus" width="62%">
   &nbsp;
-  <img src="docs/screenshots/11-mobiel.jpg" alt="Loanarr op mobiel" width="22%">
+  <img src="docs/screenshots/11-mobiel.jpg" alt="Hypotheur op mobiel" width="22%">
 </p>
 
 ---
 
 ## Vaak gestelde vragen 🙋
 
-**Is Loanarr gratis?**
+**Is Hypotheur gratis?**
 Ja. Geen account, geen e-mailadres, geen kleine lettertjes.
 
 **Wat gebeurt er met mijn gegevens?**
 Niets. Alles wat je invult blijft in je eigen browser en wordt nergens naartoe gestuurd.
 
 **Hoe juist zijn de cijfers?**
-Loanarr rekent met de officiële regels: het wettelijke notarisbarema, de registratierechten van
+Hypotheur rekent met de officiële regels: het wettelijke notarisbarema, de registratierechten van
 elk gewest en de rente van de Nationale Bank. Bij elk getal staat waar het vandaan komt, en de
 footer toont wanneer elke bron voor het laatst is bijgewerkt.
 
 **Vervangt dit mijn bank of makelaar?**
-Nee, en dat wil het ook niet. Loanarr is je voorbereiding: je weet wat haalbaar is, welke kosten
+Nee, en dat wil het ook niet. Hypotheur is je voorbereiding: je weet wat haalbaar is, welke kosten
 eraan komen en welke vragen je moet stellen. Je bank beslist uiteindelijk over je lening.
 
 **Werkt het voor heel België?**
 Ja: Vlaanderen, Wallonië en Brussel, voor de aankoop van je enige eigen woning.
 
 <p align="center">
-  <a href="https://loanarr.sennedewever.be"><b>🏡 Klaar om te ontdekken wat je kan kopen? Start op loanarr.sennedewever.be</b></a>
+  <a href="https://hypotheur.sennedewever.be"><b>🏡 Klaar om te ontdekken wat je kan kopen? Start op hypotheur.sennedewever.be</b></a>
 </p>
 
-> **Disclaimer.** Loanarr is een simulatie en geen kredietaanbod. Je bank beslist op basis van
+> **Disclaimer.** Hypotheur is een simulatie en geen kredietaanbod. Je bank beslist op basis van
 > je volledige situatie. Verzekeringen en het jaarlijks kostenpercentage (JKP) zijn niet
 > meegerekend. De woonbonus of een ander fiscaal voordeel bestaat niet meer voor nieuwe leningen
-> en rekent Loanarr dus niet mee.
+> en rekent Hypotheur dus niet mee.
 
 ---
 
 ## Onder de motorkap 🔧
 
 <details>
-<summary><b>Hoe Loanarr rekent</b></summary>
+<summary><b>Hoe Hypotheur rekent</b></summary>
 
 | | Hoe |
 |---|---|
@@ -273,7 +273,7 @@ blok `:root[data-palette="…"]` plus een regel in `palettes` in [`theme.ts`](sr
 ### Deployen
 
 Elke push naar `main` gaat via Vercel live op
-[loanarr.sennedewever.be](https://loanarr.sennedewever.be); andere branches krijgen een eigen
+[hypotheur.sennedewever.be](https://hypotheur.sennedewever.be); andere branches krijgen een eigen
 voorbeeld-URL. Er zijn geen omgevingsvariabelen nodig. Logo-varianten staan in
 [`public/logos/`](public/logos/).
 
