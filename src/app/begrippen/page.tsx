@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GlossarySearch } from "@/components/glossary-search";
 import { glossary } from "@/lib/glossary";
 import { socialMetadata } from "@/lib/site";
 
@@ -12,9 +13,14 @@ export const metadata: Metadata = {
   ...socialMetadata({ title, description, path: "/begrippen" }),
 };
 
-const entries = Object.entries(glossary).sort(([, a], [, b]) =>
-  a.term.localeCompare(b.term, "nl-BE"),
-);
+const items = Object.entries(glossary)
+  .map(([id, e]) => ({
+    id,
+    term: e.term,
+    short: e.short,
+    more: "more" in e ? e.more : undefined,
+  }))
+  .sort((a, b) => a.term.localeCompare(b.term, "nl-BE"));
 
 export default function BegrippenPage() {
   return (
@@ -28,35 +34,7 @@ export default function BegrippenPage() {
         </p>
       </header>
 
-      <nav aria-label="Snel naar" className="flex flex-wrap gap-1.5">
-        {entries.map(([id, e]) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
-          >
-            {e.term}
-          </a>
-        ))}
-      </nav>
-
-      <dl className="grid gap-3 sm:grid-cols-2">
-        {entries.map(([id, e]) => (
-          <div
-            key={id}
-            id={id}
-            className="flex scroll-mt-24 flex-col gap-1.5 rounded-xl border bg-card p-4 target:border-primary target:ring-2 target:ring-primary/30"
-          >
-            <dt className="font-semibold text-primary">{e.term}</dt>
-            <dd className="text-sm leading-relaxed">{e.short}</dd>
-            {"more" in e && e.more && (
-              <dd className="text-sm leading-relaxed text-muted-foreground">
-                {e.more}
-              </dd>
-            )}
-          </div>
-        ))}
-      </dl>
+      <GlossarySearch items={items} />
     </main>
   );
 }
