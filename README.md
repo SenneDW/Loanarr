@@ -12,7 +12,7 @@
   Gratis · zonder account · zonder e-mailadres · je gegevens blijven in je browser
 </p>
 
-https://github.com/user-attachments/assets/f8deda52-d940-42e7-a8c0-9e5e9203658a
+https://github.com/user-attachments/assets/c34e7a23-69a4-4df7-a670-d8d0707ca65f
 
 <p align="center">
   <sub>🔊 Zet je geluid aan: Hypotheur in 36 seconden, van je situatie tot je aflossingstabel.</sub>
