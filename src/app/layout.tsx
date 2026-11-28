@@ -5,7 +5,7 @@ import { MarketShell } from "@/components/market-shell";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 import { site, socialMetadata } from "@/lib/site";
-import { themeInitScript } from "@/lib/theme";
+import { themeInitScript } from "@/lib/theme-store";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

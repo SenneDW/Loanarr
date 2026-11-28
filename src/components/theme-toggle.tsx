@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Monitor, Moon, Palette, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -10,20 +10,20 @@ import {
 import {
   applyTheme,
   type ColorMode,
-  CUSTOM_HUE_KEY,
   CUSTOM_PALETTE,
-  DEFAULT_CUSTOM_HUE,
-  DEFAULT_PALETTE,
-  DEFAULT_TONE,
-  MODE_KEY,
-  PALETTE_KEY,
   type PaletteId,
   palettes,
   swatch,
-  TONE_KEY,
   type Tone,
   tones,
 } from "@/lib/theme";
+import {
+  DEFAULT_PREFS,
+  loadTheme,
+  saveTheme,
+  serializeTheme,
+  type ThemePrefs,
+} from "@/lib/theme-store";
 import { cn } from "@/lib/utils";
 
 const modes: ReadonlyArray<{
@@ -50,39 +50,42 @@ const TONE_SWATCH: Record<"light" | "dark", Record<Tone, string>> = {
   },
 };
 
-const read = (key: string): string | null => {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-};
-
-const save = (key: string, value: string) => {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    // Storage unavailable (private mode): the theme still applies for this visit.
-  }
-};
-
 /** Popover in the navigation to pick light/dark mode and a color palette. */
 export function ThemeToggle() {
-  const [palette, setPalette] = useState<PaletteId>(DEFAULT_PALETTE);
-  const [mode, setMode] = useState<ColorMode>("system");
-  const [customHue, setCustomHue] = useState(DEFAULT_CUSTOM_HUE);
-  const [tone, setTone] = useState<Tone>(DEFAULT_TONE);
+  const [prefs, setPrefs] = useState<ThemePrefs>(DEFAULT_PREFS);
+  const { palette, mode, tone, hue: customHue } = prefs;
   // Whether dark mode is active right now, so the tone labels fit (e.g. "Zwart").
   const [isDark, setIsDark] = useState(false);
+  const current = useRef(serializeTheme(DEFAULT_PREFS));
+
+  // Shows a theme without saving it (on load, or when another site changed it).
+  const show = useCallback((next: ThemePrefs) => {
+    current.current = serializeTheme(next);
+    setPrefs(next);
+    setIsDark(applyTheme(next.palette, next.mode, next.hue, next.tone));
+  }, []);
 
   useEffect(() => {
-    setPalette((read(PALETTE_KEY) as PaletteId | null) ?? DEFAULT_PALETTE);
-    setMode((read(MODE_KEY) as ColorMode | null) ?? "system");
-    setCustomHue(Number(read(CUSTOM_HUE_KEY)) || DEFAULT_CUSTOM_HUE);
-    const saved = read(TONE_KEY);
-    setTone(saved === "deep" || saved === "soft" ? saved : DEFAULT_TONE);
-    setIsDark(document.documentElement.classList.contains("dark"));
-  }, []);
+    const saved = loadTheme();
+    show(saved);
+    // Moves a theme from this site's old storage into the shared cookie.
+    saveTheme(saved);
+  }, [show]);
+
+  // Coming back to this tab: pick up a theme chosen on one of the other sites.
+  useEffect(() => {
+    const onShow = () => {
+      if (document.visibilityState !== "visible") return;
+      const saved = loadTheme();
+      if (serializeTheme(saved) !== current.current) show(saved);
+    };
+    document.addEventListener("visibilitychange", onShow);
+    window.addEventListener("focus", onShow);
+    return () => {
+      document.removeEventListener("visibilitychange", onShow);
+      window.removeEventListener("focus", onShow);
+    };
+  }, [show]);
 
   // Follow the OS setting while in "system" mode.
   useEffect(() => {
@@ -94,28 +97,16 @@ export function ThemeToggle() {
     return () => media.removeEventListener("change", onChange);
   }, [mode, palette, customHue, tone]);
 
-  const choosePalette = (p: PaletteId) => {
-    setPalette(p);
-    save(PALETTE_KEY, p);
-    applyTheme(p, mode, customHue, tone);
+  /** Applies and saves a change, for this site and the others. */
+  const choose = (patch: Partial<ThemePrefs>) => {
+    const next = { ...prefs, ...patch };
+    show(next);
+    saveTheme(next);
   };
-  const chooseMode = (m: ColorMode) => {
-    setMode(m);
-    save(MODE_KEY, m);
-    setIsDark(applyTheme(palette, m, customHue, tone));
-  };
-  const chooseTone = (t: Tone) => {
-    setTone(t);
-    save(TONE_KEY, t);
-    applyTheme(palette, mode, customHue, t);
-  };
-  const chooseHue = (h: number) => {
-    setCustomHue(h);
-    setPalette(CUSTOM_PALETTE);
-    save(CUSTOM_HUE_KEY, String(h));
-    save(PALETTE_KEY, CUSTOM_PALETTE);
-    applyTheme(CUSTOM_PALETTE, mode, h, tone);
-  };
+  const choosePalette = (p: PaletteId) => choose({ palette: p });
+  const chooseMode = (m: ColorMode) => choose({ mode: m });
+  const chooseTone = (t: Tone) => choose({ tone: t });
+  const chooseHue = (h: number) => choose({ hue: h, palette: CUSTOM_PALETTE });
 
   const active = palettes.find((p) => p.id === palette);
   // The slider follows the chosen theme, so dragging starts from the current color.

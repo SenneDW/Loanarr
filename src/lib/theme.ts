@@ -34,10 +34,11 @@ export const tones: ReadonlyArray<{
 ];
 export const DEFAULT_TONE: Tone = "default";
 
-export const PALETTE_KEY = "hypotheur:palette";
-export const MODE_KEY = "hypotheur:mode";
-export const TONE_KEY = "hypotheur:tone";
-export const CUSTOM_HUE_KEY = "hypotheur:custom-hue";
+/**
+ * Where older versions of this site kept the theme in localStorage (`<prefix>palette`,
+ * `<prefix>mode`, …). Read once as a fallback, until the shared cookie exists.
+ */
+export const LEGACY_PREFIXES = ["hypotheur:", "loanarr:"];
 export const DEFAULT_PALETTE: PaletteId = "smaragd";
 export const DEFAULT_CUSTOM_HUE = 200;
 
@@ -79,9 +80,3 @@ export function applyTheme(
   root.classList.toggle("dark", dark);
   return dark;
 }
-
-/**
- * Runs before first paint (inlined in <head>) so the saved theme shows without a flash.
- * Keep it dependency-free: it is serialized as a string.
- */
-export const themeInitScript = `(function(){try{var d=document.documentElement;var p=localStorage.getItem("${PALETTE_KEY}");var m=localStorage.getItem("${MODE_KEY}")||"system";var t=localStorage.getItem("${TONE_KEY}");if(t==="deep"||t==="soft")d.dataset.tone=t;if(p&&p!=="${DEFAULT_PALETTE}")d.dataset.palette=p;if(p==="${CUSTOM_PALETTE}"){var h=Number(localStorage.getItem("${CUSTOM_HUE_KEY}"))||${DEFAULT_CUSTOM_HUE};d.style.setProperty("--h",String(h));d.style.setProperty("--ah",String(Math.round((h+150)%360)));}var dark=m==="dark"||(m==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(dark)d.classList.add("dark");}catch(e){}})();`;
