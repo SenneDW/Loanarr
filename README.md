@@ -204,6 +204,8 @@ voor België, verzameld door de NBB), het tariefbesluit op [notaris.be](https://
 Je hebt [Bun](https://bun.sh) 1.3+ en Node.js 20+ nodig.
 
 ```bash
+git clone https://github.com/SenneDW/Hypotheur.git
+cd Hypotheur
 bun install
 bun dev          # http://localhost:3000
 ```
@@ -272,9 +274,13 @@ blok `:root[data-palette="…"]` plus een regel in `palettes` in [`theme.ts`](sr
 
 ### Deployen
 
-Elke push naar `main` gaat via Vercel live op
+Elke push naar `main` gaat via het Vercel-project `hypotheur` live op
 [hypotheur.sennedewever.be](https://hypotheur.sennedewever.be); andere branches krijgen een eigen
 voorbeeld-URL. Er zijn geen omgevingsvariabelen nodig. Logo-varianten staan in
 [`public/logos/`](public/logos/).
+
+Hypotheur heette eerst Loanarr. Het oude adres `loanarr.sennedewever.be` blijft aan het project
+gekoppeld en stuurt elke pagina permanent door naar hetzelfde pad op het nieuwe adres (zie
+[`next.config.ts`](next.config.ts)).
 
 </details>
